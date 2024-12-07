@@ -38,6 +38,11 @@ const Home: NextPage = () => {
               packages/hardhat/contracts
             </code>
           </p>
+          <button className="btn btn-primary mt-4">
+            <Link href="/register" passHref>
+              Get Started
+            </Link>
+          </button>
         </div>
 
         <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
