@@ -248,7 +248,7 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
     Backend: {
-      address: "0xB76401dDfc10275515cD7a6e8FAF47C14BeAE834",
+      address: "0x7c3c329B828042AaBF4e936FdAEc29893A4d5eeE",
       abi: [
         {
           inputs: [
@@ -294,6 +294,25 @@ const deployedContracts = {
             },
           ],
           name: "FinePaid",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "user",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "newRewardBalance",
+              type: "uint256",
+            },
+          ],
+          name: "RewardUpdated",
           type: "event",
         },
         {
@@ -353,6 +372,25 @@ const deployedContracts = {
           type: "event",
         },
         {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          name: "allUsers",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
           inputs: [],
           name: "anonAadhaarVerifierAddr",
           outputs: [
@@ -366,15 +404,27 @@ const deployedContracts = {
           type: "function",
         },
         {
+          inputs: [],
+          name: "convertPointsToRewards",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
           inputs: [
             {
               internalType: "string",
-              name: "_name",
+              name: "_basename",
               type: "string",
             },
             {
               internalType: "string",
               name: "_vehicleRegistrationNumber",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "_vehicleType",
               type: "string",
             },
             {
@@ -459,6 +509,74 @@ const deployedContracts = {
               internalType: "uint256",
               name: "",
               type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getAllUsersAndPoints",
+          outputs: [
+            {
+              internalType: "string[]",
+              name: "basenames",
+              type: "string[]",
+            },
+            {
+              internalType: "uint256[]",
+              name: "points",
+              type: "uint256[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getContractBalance",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMyRewards",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_walletAddress",
+              type: "address",
+            },
+          ],
+          name: "getUserDetailsByAddress",
+          outputs: [
+            {
+              internalType: "string",
+              name: "basename",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "vehicleNumber",
+              type: "string",
             },
           ],
           stateMutability: "view",
@@ -600,6 +718,55 @@ const deployedContracts = {
           type: "function",
         },
         {
+          inputs: [],
+          name: "totalRewardPool",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_user",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "_points",
+              type: "uint256",
+            },
+          ],
+          name: "updatePoints",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_user",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "_newReward",
+              type: "uint256",
+            },
+          ],
+          name: "updateUserReward",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
           inputs: [
             {
               internalType: "address",
@@ -611,12 +778,17 @@ const deployedContracts = {
           outputs: [
             {
               internalType: "string",
-              name: "name",
+              name: "basename",
               type: "string",
             },
             {
               internalType: "string",
               name: "vehicleRegistrationNumber",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "vehicleType",
               type: "string",
             },
             {
@@ -627,6 +799,16 @@ const deployedContracts = {
             {
               internalType: "uint256",
               name: "pendingFines",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "rewardBalance",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "points",
               type: "uint256",
             },
           ],

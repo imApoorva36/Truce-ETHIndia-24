@@ -9,11 +9,15 @@ contract Backend {
     address public anonAadhaarVerifierAddr;
     address public verifier;
     uint256 public immutable storedPublicKeyHash;
+    address[] public allUsers;  // Array to track all user addresses
     struct User {
-        string name;
+        string basename;
         string vehicleRegistrationNumber;
-        address walletAddress;
+        string vehicleType;
+        address walletAddress;     // keep only this one
         uint256 pendingFines;
+        uint256 rewardBalance;
+        uint256 points;        // Added points field
     }
 
     struct Violation {
@@ -39,6 +43,7 @@ contract Backend {
         uint256[8] groth16Proof2;
     }
 
+    uint256 public totalRewardPool;
     mapping(address => User) public users;
     mapping(string => address) public vehicleToUser;
     mapping(address => Violation[]) userViolations;
@@ -46,6 +51,7 @@ contract Backend {
     mapping(string => uint256) public violationFines;
 
     event UserCreated(address indexed userAddress, string name, string vehicleRegistrationNumber);
+    event RewardUpdated(address indexed user, uint256 newRewardBalance);
     event ViolationReported(address indexed user, string violationType, address reportedBy, uint256 fineAmount);
     event FinePaid(address indexed user, uint256 violationIndex, uint256 amount);
 
@@ -54,10 +60,28 @@ contract Backend {
         // Initialize some dummy fine amounts for violation types
         anonAadhaarVerifierAddr = _verifierAddr;
         storedPublicKeyHash = _pubkeyHash;
-        violationFines["Speeding"] = 200;
-        violationFines["Parking"] = 50;
-        violationFines["Red Light"] = 50;
-        violationFines["Wrong way"] = 50;
+        violationFines["Speeding"] = 80;
+        violationFines["Parking"] = 40;
+        violationFines["Red Light"] = 60;
+        violationFines["Wrong way"] = 90;
+        totalRewardPool = 1000;  // Initialize with 1000
+    }
+
+    // ---------------------- REWARDS SYSTEM FUNCTIONS ----------------------
+
+    // Function to add to the total reward pool
+   function updateUserReward(address _user, uint256 _newReward) public {
+        require(users[_user].walletAddress != address(0), "User does not exist");
+
+        users[_user].rewardBalance = _newReward;
+        emit RewardUpdated(_user, _newReward);
+    }
+
+    // Function to fetch a user's reward balance
+    function getMyRewards() public view returns (uint256) {
+        User storage user = users[msg.sender];
+        require(bytes(user.vehicleRegistrationNumber).length > 0, "User not registered. Please register first.");
+        return user.rewardBalance;
     }
 
     function addressToUint256(address _addr) private pure returns (uint256) {
@@ -104,9 +128,10 @@ contract Backend {
     
     // Create a new user
     function createUser(
-        string memory _name,
+        string memory _basename,
         string memory _vehicleRegistrationNumber,
-        CreateUserParams memory params
+        string memory _vehicleType,
+        CreateUserParams memory params    // removed _userAddress parameter
     ) public payable {
         require(users[msg.sender].walletAddress == address(0), "User already exists");
         
@@ -127,16 +152,21 @@ contract Backend {
             params.nullifierSeed2,
             params.signal
         );
-        require(isValid2, '[AnonAadhaarVote]: DL Proof sent is not valid.');
+        require(isValid || isValid2, 'Proof sent is not valid.');
+        // require(isValid2, '[AnonAadhaarVote]: DL Proof sent is not valid.');
 
         users[msg.sender] = User({
-            name: _name,
+            basename: _basename,
             vehicleRegistrationNumber: _vehicleRegistrationNumber,
+            vehicleType: _vehicleType,
             walletAddress: msg.sender,
-            pendingFines: 0
+            pendingFines: 0,
+            rewardBalance: 0,
+            points: 100          // Start with 100 points
         });
+        allUsers.push(msg.sender);  // Add this line after creating new user
         vehicleToUser[_vehicleRegistrationNumber] = msg.sender;
-        emit UserCreated(msg.sender, _name, _vehicleRegistrationNumber);
+        emit UserCreated(msg.sender, _basename, _vehicleRegistrationNumber);
     }
 
     // Report a violation
@@ -192,116 +222,69 @@ contract Backend {
         violation.isPaid = true;
         users[_user].pendingFines--;
         finesPaid[_user] += msg.value;
+        totalRewardPool += msg.value;  // Add fine amount to total reward pool
         emit FinePaid(_user, _violationIndex, msg.value);
     }
+
+    function updatePoints(address _user, uint256 _points) public {
+        require(users[_user].walletAddress != address(0), "User does not exist");
+        users[_user].points = _points;
+    }
+
+    function convertPointsToRewards() public {
+        User storage user = users[msg.sender];
+        require(user.points > 0, "No points to convert");
+        require(totalRewardPool > 0, "Reward pool is empty");
+
+        // Calculate total points in the system
+        uint256 totalPoints = 0;
+        address[] memory userAddresses = new address[](1);
+        for (uint i = 0; i < userAddresses.length; i++) {
+            totalPoints += users[userAddresses[i]].points;
+        }
+        require(totalPoints > 0, "No points in the system");
+
+        // Calculate user's share of the reward pool
+        uint256 rewardShare = (user.points * totalRewardPool) / totalPoints;
+
+        // Ensure contract has enough Ether
+        require(address(this).balance >= rewardShare, "Not enough funds in contract to pay rewards");
+
+        // Transfer reward to the user's wallet
+        (bool success, ) = msg.sender.call{value: rewardShare}("");
+        require(success, "Reward transfer failed");
+
+        // Update user's internal balances
+        user.rewardBalance += rewardShare; // For internal tracking
+        user.points = 0; // Reset points after conversion
+        totalRewardPool -= rewardShare;
+
+        emit RewardUpdated(msg.sender, user.rewardBalance);
+    }
+
+    function getContractBalance() public view returns (uint256) {
+        return address(this).balance;
+    }
+
+    function getUserDetailsByAddress(address _walletAddress) public view returns (string memory basename, string memory vehicleNumber) {
+        require(users[_walletAddress].walletAddress != address(0), "User does not exist");
+        return (users[_walletAddress].basename, users[_walletAddress].vehicleRegistrationNumber);
+    }
+
+    function getAllUsersAndPoints() public view returns (
+        string[] memory basenames,    // changed from usernames to basenames
+        uint256[] memory points
+    ) {
+        uint256 totalUsers = allUsers.length;
+        basenames = new string[](totalUsers);   // changed variable name
+        points = new uint256[](totalUsers);
+        
+        for(uint256 i = 0; i < totalUsers; i++) {
+            address userAddress = allUsers[i];
+            basenames[i] = users[userAddress].basename;   // changed variable name
+            points[i] = users[userAddress].points;
+        }
+        
+        return (basenames, points);   // changed return variable name
+    }
 }
-
-// SPDX-License-Identifier: GPL-3.0
-// pragma solidity ^0.8.19;
-
-// import '@anon-aadhaar/contracts/interfaces/IAnonAadhaar.sol';
-// import '@anon-aadhaar/contracts/interfaces/IAnonAadhaarVote.sol';
-
-// contract AnonAadhaarVote is IAnonAadhaarVote {
-//     string public votingQuestion;
-//     address public anonAadhaarVerifierAddr;
-
-//     // List of proposals
-//     Proposal[] public proposals;
-
-//     // Mapping to track if a userNullifier has already voted
-//     mapping(uint256 => bool) public hasVoted;
-
-//     // Constructor to initialize proposals
-//     constructor(
-
-//         address _verifierAddr
-//     ) {
-//         anonAadhaarVerifierAddr = _verifierAddr;
-//         votingQuestion = _votingQuestion;
-//         for (uint256 i = 0; i < proposalDescriptions.length; i++) {
-//             proposals.push(Proposal(proposalDescriptions[i], 0));
-//         }
-//     }
-
-//     /// @dev Convert an address to uint256, used to check against signal.
-//     /// @param _addr: msg.sender address.
-//     /// @return Address msg.sender's address in uint256
-//     function addressToUint256(address _addr) private pure returns (uint256) {
-//         return uint256(uint160(_addr));
-//     }
-
-//     /// @dev Check if the timestamp is more recent than (current time - 3 hours)
-//     /// @param timestamp: msg.sender address.
-//     /// @return bool
-//     function isLessThan3HoursAgo(uint timestamp) public view returns (bool) {
-//         return timestamp > (block.timestamp - 3 * 60 * 60);
-//     }
-
-//     /// @dev Register a vote in the contract.
-//     /// @param proposalIndex: Index of the proposal you want to vote for.
-//     /// @param nullifierSeed: Nullifier Seed used while generating the proof.
-//     /// @param nullifier: Nullifier for the user's Aadhaar data.
-//     /// @param timestamp: Timestamp of when the QR code was signed.
-//     /// @param revealArray: Array of the values used as input for the proof generation (equal to [0, 0, 0, 0] if no field reveal were asked).
-//     /// @param groth16Proof: SNARK Groth16 proof.
-//     function voteForProposal(
-//     uint256 proposalIndex,
-//     uint256 nullifierSeed,
-//     uint256 nullifier,
-//     uint256 timestamp,
-//     uint256[4] memory revealArray,
-//     uint256[8] memory groth16Proof
-// ) public payable {
-//     require(!hasVoted[nullifier], '[AnonAadhaarVote]: User has already voted');
-//     require(proposalIndex < proposals.length, '[AnonAadhaarVote]: Invalid proposal index');
-
-//     bool isValid = IAnonAadhaar(anonAadhaarVerifierAddr).verifyAnonAadhaarProof(
-//         nullifierSeed,
-//         nullifier,
-//         timestamp,
-//         addressToUint256(msg.sender),
-//         revealArray,
-//         groth16Proof
-//     );
-//     require(isValid, '[AnonAadhaarVote]: proof sent is not valid.');
-
-//     hasVoted[nullifier] = true;
-//     proposals[proposalIndex].voteCount++;
-
-//     emit Voted(msg.sender, proposalIndex);
-// }
-
-
-//     // Function to get the total number of proposals
-//     function getProposalCount() public view returns (uint256) {
-//         return proposals.length;
-//     }
-
-//     // Function to get proposal information by index
-//     function getProposal(
-//         uint256 proposalIndex
-//     ) public view returns (string memory, uint256) {
-//         require(
-//             proposalIndex < proposals.length,
-//             '[AnonAadhaarVote]: Invalid proposal index here'
-//         );
-
-//         Proposal memory proposal = proposals[proposalIndex];
-//         return (proposal.description, proposal.voteCount);
-//     }
-
-//     // Function to get the total number of votes across all proposals
-//     function getTotalVotes() public view returns (uint256) {
-//         uint256 totalVotes = 0;
-//         for (uint256 i = 0; i < proposals.length; i++) {
-//             totalVotes += proposals[i].voteCount;
-//         }
-//         return totalVotes;
-//     }
-
-//     // Function to check if a user has already voted
-//     function checkVoted(uint256 _nullifier) public view returns (bool) {
-//         return hasVoted[_nullifier];
-//     }
-// }
