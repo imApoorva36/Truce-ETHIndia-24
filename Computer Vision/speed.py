@@ -10,7 +10,7 @@ from ultralytics.utils.checks import check_imshow
 from ultralytics.utils.plotting import Annotator, colors
 
 
-class SpeedEstimator:
+class SpeedDirEstimator:
     """A class to estimate the speed of objects in a real-time video stream based on their tracks."""
 
     def __init__(self, names, reg_pts=None, view_img=False, line_thickness=2, spdl_dist_thresh=10):
@@ -43,7 +43,7 @@ class SpeedEstimator:
         # Check if the environment supports imshow
         self.env_check = check_imshow(warn=True)
 
-    def estimate_speed(self, im0, tracks):
+    def estimate_speedDir(self, im0, tracks, is_one_way):
         """
         Estimates the speed of objects based on tracking data.
 
@@ -62,6 +62,8 @@ class SpeedEstimator:
         t_ids = tracks[0].boxes.id.int().cpu().tolist()
         annotator = Annotator(im0, line_width=self.tf)
         annotator.draw_region(reg_pts=self.reg_pts, color=(255, 0, 255), thickness=self.tf * 2)
+        #1: bicycle  2: car  3: motorcycle  5: bus  7: truck
+        overspeed =  {1: 20, 2: 25, 3 : 25, 5: 30, 7: 35}
 
         for box, t_id, cls in zip(boxes, t_ids, clss):
             
@@ -77,19 +79,47 @@ class SpeedEstimator:
             if t_id not in self.trk_pt:
                 self.trk_pt[t_id] = 0
 
-            speed_label = f"{int(self.spd[t_id])} km/h" if t_id in self.spd else self.names[int(cls)]
+            # speed_label = f"{int(self.spd[t_id])} km/h" if t_id in self.spd else self.names[int(cls)]
+            if t_id in self.spd:
+                speed = int(self.spd[t_id])
+                speed_label = f"{speed} km/h"
+                if speed > overspeed[int(cls)]:  # Check if speed is over the limit
+                    speed_label = f"{speed} km/h (Overspeed)"
+            else:
+                speed_label = self.names[int(cls)]
+
+            
+            if len(track) > 1:
+                # Compare the last two points
+                x,y = bbox_center
+                prev_x, prev_y = track[-2]
+                delta_x, delta_y = x - prev_x, prev_y - y
+                
+                 # Vertical motion
+                motion_direction = "F" if delta_y < 0 else "B"
+            else:
+                motion_direction = "N/A"
+
+            if is_one_way:
+                if motion_direction == "B":
+                    dir_flag = "Wrong Way"
+                else:
+                    dir_flag = ""
+            else:
+                dir_flag = ""       
+
             bbox_color = colors(int(t_id), True)
 
-            annotator.box_label(box, speed_label, bbox_color)
+            annotator.box_label(box, label = speed_label + " "+ dir_flag, color=bbox_color)
             cv2.polylines(im0, [trk_pts], isClosed=False, color=bbox_color, thickness=self.tf)
             cv2.circle(im0, (int(track[-1][0]), int(track[-1][1])), self.tf * 2, bbox_color, -1)
 
             # Calculation of object speed
             if not self.reg_pts[0][0] < track[-1][0] < self.reg_pts[1][0]:
                 return
-            if self.reg_pts[1][1] - self.spdl < track[-1][1] < self.reg_pts[1][1] + self.spdl:
+            if self.reg_pts[1][1] - self.spdl <= track[-1][1] <= self.reg_pts[1][1] + self.spdl:
                 direction = "known"
-            elif self.reg_pts[0][1] - self.spdl < track[-1][1] < self.reg_pts[0][1] + self.spdl:
+            elif self.reg_pts[0][1] - self.spdl <= track[-1][1] <= self.reg_pts[0][1] + self.spdl:
                 direction = "known"
             else:
                 direction = "unknown"
@@ -114,4 +144,4 @@ class SpeedEstimator:
 
 if __name__ == "__main__":
     names = {0: "person", 1: "car"}  # example class names
-    speed_estimator = SpeedEstimator(names)
+    speed_estimator = SpeedDirEstimator(names)
