@@ -44,6 +44,7 @@ contract Backend {
     }
 
     uint256 public totalRewardPool;
+    uint256 public totalpoints;
     mapping(address => User) public users;
     mapping(string => address) public vehicleToUser;
     mapping(address => Violation[]) userViolations;
@@ -65,6 +66,7 @@ contract Backend {
         violationFines["Red Light"] = 60;
         violationFines["Wrong way"] = 90;
         totalRewardPool = 1000; // Initialize with 1000
+        totalpoints = 0;
     }
 
     // ---------------------- REWARDS SYSTEM FUNCTIONS ----------------------
@@ -167,6 +169,7 @@ contract Backend {
         });
         allUsers.push(msg.sender); // Add this line after creating new user
         vehicleToUser[_vehicleRegistrationNumber] = msg.sender;
+        totalpoints += 100;
         emit UserCreated(msg.sender, _basename, _vehicleRegistrationNumber);
     }
 
@@ -235,24 +238,19 @@ contract Backend {
 
     function updatePoints(address _user, uint256 _points) public {
         require(users[_user].walletAddress != address(0), "User does not exist");
+        totalpoints-=users[_user].points;
         users[_user].points = _points;
+        totalpoints+=users[_user].points;
     }
 
     function convertPointsToRewards() public {
         User storage user = users[msg.sender];
         require(user.points > 0, "No points to convert");
         require(totalRewardPool > 0, "Reward pool is empty");
-
-        // Calculate total points in the system
-        uint256 totalPoints = 0;
-        address[] memory userAddresses = new address[](1);
-        for (uint i = 0; i < userAddresses.length; i++) {
-            totalPoints += users[userAddresses[i]].points;
-        }
-        require(totalPoints > 0, "No points in the system");
+        require(totalpoints > 0, "No points in the system");
 
         // Calculate user's share of the reward pool
-        uint256 rewardShare = (user.points * totalRewardPool) / totalPoints;
+        uint256 rewardShare = (user.points * totalRewardPool) / totalpoints;
 
         // Ensure contract has enough Ether
         require(address(this).balance >= rewardShare, "Not enough funds in contract to pay rewards");
@@ -263,6 +261,7 @@ contract Backend {
 
         // Update user's internal balances
         user.rewardBalance += rewardShare; // For internal tracking
+        totalpoints-=user.points;
         user.points = 0; // Reset points after conversion
         totalRewardPool -= rewardShare;
 

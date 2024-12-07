@@ -248,7 +248,7 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
     Backend: {
-      address: "0x49ff6773611575eF4c42F5B5696e4291B161DD1c",
+      address: "0xa4e1D21AfB844d3dAD1db4FDcC2cE22268E5633f",
       abi: [
         {
           inputs: [
@@ -507,51 +507,58 @@ const deployedContracts = {
           name: "getAllUsersAndViolations",
           outputs: [
             {
-              internalType: "address[]",
-              name: "userAddresses",
-              type: "address[]",
-            },
-            {
-              internalType: "string[]",
-              name: "basenames",
-              type: "string[]",
-            },
-            {
               components: [
                 {
-                  internalType: "uint256",
-                  name: "time",
-                  type: "uint256",
-                },
-                {
-                  internalType: "string",
-                  name: "violationType",
-                  type: "string",
-                },
-                {
-                  internalType: "string",
-                  name: "area",
-                  type: "string",
-                },
-                {
                   internalType: "address",
-                  name: "reportedBy",
+                  name: "userAddress",
                   type: "address",
                 },
                 {
-                  internalType: "bool",
-                  name: "isPaid",
-                  type: "bool",
+                  internalType: "string",
+                  name: "basename",
+                  type: "string",
                 },
                 {
-                  internalType: "uint256",
-                  name: "fineAmount",
-                  type: "uint256",
+                  components: [
+                    {
+                      internalType: "uint256",
+                      name: "time",
+                      type: "uint256",
+                    },
+                    {
+                      internalType: "string",
+                      name: "violationType",
+                      type: "string",
+                    },
+                    {
+                      internalType: "string",
+                      name: "area",
+                      type: "string",
+                    },
+                    {
+                      internalType: "address",
+                      name: "reportedBy",
+                      type: "address",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isPaid",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "fineAmount",
+                      type: "uint256",
+                    },
+                  ],
+                  internalType: "struct Backend.Violation[]",
+                  name: "violations",
+                  type: "tuple[]",
                 },
               ],
-              internalType: "struct Backend.Violation[][]",
-              name: "violations",
-              type: "tuple[][]",
+              internalType: "struct Backend.UserViolationInfo[]",
+              name: "",
+              type: "tuple[]",
             },
           ],
           stateMutability: "view",
@@ -841,6 +848,26 @@ const deployedContracts = {
             },
           ],
           stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "totalpoints",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "updateDailyPoints",
+          outputs: [],
+          stateMutability: "nonpayable",
           type: "function",
         },
         {
