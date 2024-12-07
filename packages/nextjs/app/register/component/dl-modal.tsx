@@ -109,15 +109,15 @@ export const DLModal = () => {
     // eslint-disable-next-line react/jsx-filename-extension
     <div className="container pb-5">
       <div className="box" style={{ maxWidth: "800px", margin: "0 auto" }}>
-
         <form onSubmit={handleSubmit}>
+          <img src="/digilocker.png" alt="DigiLocker" className="h-16 mx-auto" />
           <label htmlFor="xml">DigiLocker DL XML (Paste here)</label>
           <textarea
             value={xmlContent}
             onChange={e => handleXMLChange(e.target.value)}
             className="text-black"
             style={{
-              backgroundColor: "#f5f5f5",
+              backgroundColor: "#f1f1f1",
               fontFamily: '"Fira code", "Fira Mono", monospace',
               fontSize: 12,
               height: "200px",
@@ -130,7 +130,7 @@ export const DLModal = () => {
 
           <hr />
 
-          <div className="form-row row">
+          <div className="form-row row hidden">
             <div className="col-md-6 mb-3">
               <label htmlFor="revealStart">Reveal Start</label>
 
@@ -143,7 +143,7 @@ export const DLModal = () => {
               />
             </div>
 
-            <div className="col-md-6 mb-3">
+            <div className="col-md-6 mb-3 hidden">
               <label htmlFor="revealEnd">Reveal End</label>
               <input
                 type="text"
@@ -154,7 +154,7 @@ export const DLModal = () => {
               />
             </div>
 
-            <div className="col-md-12">
+            <div className="col-md-12 hidden">
               {revealError && (
                 <div className="alert alert-danger" role="alert">
                   {revealError}
@@ -168,7 +168,7 @@ export const DLModal = () => {
             </div>
           </div>
 
-          <div className="form-group mb-3">
+          <div className="form-group mb-3 hidden">
             <label htmlFor="nullifierSeed">Nullifier Seed (a random number for generating unique nullifier)</label>
             <input
               type="number"
