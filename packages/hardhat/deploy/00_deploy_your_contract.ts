@@ -1,45 +1,23 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
-import { Contract } from "ethers";
 
-/**
- * Deploys a contract named "YourContract" using the deployer account and
- * constructor arguments set to the deployer address
- *
- * @param hre HardhatRuntimeEnvironment object.
- */
-const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  /*
-    On localhost, the deployer account is the one that comes with Hardhat, which is already funded.
+const ANON_AADHAAR_VERIFIER = "0xC4C4d6c21F1D8e4591a69f7662b6EcE0f2f0E61b";
 
-    When deploying to live networks (e.g `yarn deploy --network sepolia`), the deployer account
-    should have sufficient balance to pay for the gas fees for contract creation.
-
-    You can generate a random account with `yarn generate` which will fill DEPLOYER_PRIVATE_KEY
-    with a random private key in the .env file (then used on hardhat.config.ts)
-    You can run the `yarn account` command to check your balance in every network.
-  */
+const deployBackend: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
-  await deploy("YourContract", {
-    from: deployer,
-    log: true,
-    autoMine: true,
-  });
+  console.log("\n📡 Deploying...\n");
 
-  await deploy("AnonAadhaarVote", {
+  // Deploy main contract with existing verifier address
+  const Backend = await deploy("Backend", {
     from: deployer,
-    args: ["Voting Question", ["Proposal 1", "Proposal 2"], '0xC4C4d6c21F1D8e4591a69f7662b6EcE0f2f0E61b'], // Replace with actual arguments
+    args: [ANON_AADHAAR_VERIFIER],
     log: true,
-    autoMine: true,
+    waitConfirmations: 1,
   });
-
-  // No need to interact with the contract after deployment as there is no greeting function
+  console.log(`🚀 Backend deployed at ${Backend.address}`);
 };
 
-export default deployYourContract;
-
-// Tags are useful if you have multiple deploy files and only want to run one of them.
-// e.g. yarn deploy --tags YourContract
-deployYourContract.tags = ["YourContract", "AnonAadhaarVote"];
+export default deployBackend;
+deployBackend.tags = ["Backend"];
