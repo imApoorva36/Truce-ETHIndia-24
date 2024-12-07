@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { ArrowUpRight, CreditCard, Gift, Star, TrendingUp, Trophy, Wallet, Zap } from "lucide-react";
+import { ArrowUpRight, CreditCard, Gift, Star, Trophy, Wallet, Zap } from "lucide-react";
 
 const RewardsPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState("rewards");
@@ -16,32 +16,31 @@ const RewardsPage: React.FC = () => {
   useEffect(() => {
     // Fetch user stats and rewards
     const fetchUserStats = async () => {
-      // Mock user stats
+      const userPoints = 1750; // Mock points
+      const calculateTier = (points: number) => {
+        if (points >= 2000) return "Tier 8";
+        if (points >= 1500) return "Tier 7";
+        if (points >= 1000) return "Tier 6";
+        if (points >= 750) return "Tier 5";
+        if (points >= 500) return "Tier 4";
+        if (points >= 250) return "Tier 3";
+        if (points >= 100) return "Tier 2";
+        return "Tier 1";
+      };
+
+      const nextTierPoints = userPoints >= 2000 ? 0 : Math.ceil((userPoints + 250) / 250) * 250;
+      const pointsToNextTier = Math.max(0, nextTierPoints - userPoints);
+
       setUserStats({
-        totalPoints: 1750,
-        currentTier: "Tier 7",
-        nextTierPoints: 2000,
-        pointsToNextTier: 250,
+        totalPoints: userPoints,
+        currentTier: calculateTier(userPoints),
+        nextTierPoints,
+        pointsToNextTier,
       });
     };
 
     fetchUserStats();
-
-    const calculateTier = (points: number) => {
-      if (points >= 2000) return "Tier 8";
-      if (points >= 1500) return "Tier 7";
-      if (points >= 1000) return "Tier 6";
-      if (points >= 750) return "Tier 5";
-      if (points >= 500) return "Tier 4";
-      if (points >= 250) return "Tier 3";
-      if (points >= 100) return "Tier 2";
-      return "Tier 1";
-    };
-
-    const userPoints = 1750;
-    setCurrentTier(calculateTier(userPoints));
-  }
-  , []);
+  }, []);
 
   const rewardTiers = [
     { name: "Tier 1", points: 0, color: "badge-primary" },
@@ -96,11 +95,11 @@ const RewardsPage: React.FC = () => {
         <div className="card bg-base-100 shadow-xl mb-6">
           <div className="card-body">
             <h2 className="card-title">Reward Tiers</h2>
-            <div className="flex justify-between items-center">
-              {rewardTiers.map((tier, index) => (
-                <div key={tier.name} className="flex flex-col items-center">
+            <div className="grid grid-cols-4 sm:grid-cols-8 gap-2 justify-items-center">
+              {rewardTiers.map(tier => (
+                <div key={tier.name} className="flex flex-col items-center text-xs">
                   <div
-                    className={`badge ${tier.color} ${currentTier === tier.name ? "badge-lg" : "opacity-50"}`}
+                    className={`badge ${tier.color} ${userStats.currentTier === tier.name ? "badge-lg text-sm" : "opacity-50"}`}
                   >
                     {tier.name}
                   </div>
@@ -120,7 +119,7 @@ const RewardsPage: React.FC = () => {
               {userStats.pointsToNextTier > 0 ? (
                 <>
                   {Math.abs(userStats.pointsToNextTier)} points to
-                  <span className="font-bold ml-1">Platinum Tier</span>
+                  <span className="font-bold ml-1">Next Tier</span>
                 </>
               ) : (
                 <span className="text-success">You've reached the top tier!</span>
@@ -170,7 +169,7 @@ const RewardsPage: React.FC = () => {
 
         {/* ETH Conversion Modal */}
         {selectedCoupon === "coup3" && (
-          <dialog id="eth_modal" className="modal modal-open">
+          <dialog className="modal modal-open">
             <div className="modal-box">
               <h3 className="font-bold text-lg">Convert Points to ETH</h3>
               <div className="py-4">
