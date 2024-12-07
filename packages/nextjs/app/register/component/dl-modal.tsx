@@ -1,24 +1,24 @@
-'use client'
+"use client";
+
 import React from "react";
+import { generateInput } from "../anon-digilocker";
+import revealSelectors from "../reveal-selectors.json";
 import { groth16 } from "snarkjs";
-import { generateInput } from "../register/anon-digilocker";
-import revealSelectors from "./reveal-selectors.json";
 
-
-export default function App() {
-  const [xmlContent, setXmlContent] = React.useState('');
+export const DLModal = () => {
+  const [xmlContent, setXmlContent] = React.useState("");
   const [status, setStatus] = React.useState("");
   const [showModal, setShowModal] = React.useState(false);
-  const [revealStart, setRevealStart] = React.useState('');
-  const [revealEnd, setRevealEnd] = React.useState('');
+  const [revealStart, setRevealStart] = React.useState("");
+  const [revealEnd, setRevealEnd] = React.useState("");
   const [proof, setProof] = React.useState<any>();
 
   function handleXMLChange(newXml: any) {
     setXmlContent(newXml);
 
-    const hasMatch = revealSelectors.some((selector) => {
+    const hasMatch = revealSelectors.some(selector => {
       const searchKey = `<CertificateData><${selector.documentType}`;
-      
+
       if (!newXml.includes(searchKey)) {
         return false;
       }
@@ -29,8 +29,8 @@ export default function App() {
     });
 
     if (!hasMatch) {
-      setRevealStart('');
-      setRevealEnd('');
+      setRevealStart("");
+      setRevealEnd("");
     }
   }
 
@@ -58,7 +58,7 @@ export default function App() {
 
       setStatus("Generating proof...");
 
-      const startTime = performance.now()
+      const startTime = performance.now();
       const fullProof = await groth16.fullProve(
         inputs,
         `https://anon-aadhaar-artifacts.s3.eu-central-1.amazonaws.com/digilocker/digilocker-verifier.wasm`,
@@ -66,7 +66,9 @@ export default function App() {
         console,
       );
       const result = await groth16.verify(
-        await fetch(`https://anon-aadhaar-artifacts.s3.eu-central-1.amazonaws.com/digilocker/vkey.json`).then((res) => res.json()),
+        await fetch(`https://anon-aadhaar-artifacts.s3.eu-central-1.amazonaws.com/digilocker/vkey.json`).then(res =>
+          res.json(),
+        ),
         fullProof.publicSignals,
         fullProof.proof,
       );
@@ -107,68 +109,37 @@ export default function App() {
     // eslint-disable-next-line react/jsx-filename-extension
     <div className="container pb-5">
       <div className="box" style={{ maxWidth: "800px", margin: "0 auto" }}>
-        <h1 className="mt-3 mb-3">Anon DigiLocker</h1>
-        <hr />
-
-        <div className="mb-3">
-          <h5>
-            <span className="mr-3">Instructions </span>
-          </h5>
-          <ul>
-            <li>
-              Open DigiLocker app and go to the <code>Issued</code> tab.
-            </li>
-            <li>
-              Click the three dot menu icon against the document you want to prove and select{" "}
-              <code>Download XML</code>.
-            </li>
-            <li>Copy the XMl content and paste in the form below.</li>
-          </ul>
-        </div>
-
-        <hr />
 
         <form onSubmit={handleSubmit}>
-          <label htmlFor="xml">DigiLocker XML (Paste below)</label>
+          <label htmlFor="xml">DigiLocker DL XML (Paste here)</label>
           <textarea
             value={xmlContent}
-            onChange={(e) => handleXMLChange(e.target.value)}
+            onChange={e => handleXMLChange(e.target.value)}
             className="text-black"
             style={{
               backgroundColor: "#f5f5f5",
               fontFamily: '"Fira code", "Fira Mono", monospace',
               fontSize: 12,
-              height: "400px",
+              height: "200px",
               overflowY: "scroll",
               marginTop: "10px",
-              padding: 10
+              padding: 10,
+              width: "100%",
             }}
           />
 
           <hr />
 
           <div className="form-row row">
-            <div>
-              <h5>Selective Disclosure</h5>
-              <p>
-                You can reveal some data from the <code>{"<CertificateData />"}</code> node of the
-                XML, as part of the proof. Type of the Document (PAN, DirivingLicense, etc.) will always be revealed.
-              </p>
-              <p>
-                Enter the text from which the reveal should start and end. For example, in a PAN
-                Verification Record XML you can reveal your PAN number which is between{" "}
-                <code>num="</code> and <code>"</code> in the XML
-              </p>
-            </div>
             <div className="col-md-6 mb-3">
               <label htmlFor="revealStart">Reveal Start</label>
 
               <input
                 type="text"
-                className="form-control"
+                className="form-control border"
                 id="revealStart"
                 value={revealStart}
-                onChange={(e) => setRevealStart(e.target.value)}
+                onChange={e => setRevealStart(e.target.value)}
               />
             </div>
 
@@ -176,10 +147,10 @@ export default function App() {
               <label htmlFor="revealEnd">Reveal End</label>
               <input
                 type="text"
-                className="form-control"
+                className="form-control border"
                 id="revealEnd"
                 value={revealEnd}
-                onChange={(e) => setRevealEnd(e.target.value)}
+                onChange={e => setRevealEnd(e.target.value)}
               />
             </div>
 
@@ -197,33 +168,24 @@ export default function App() {
             </div>
           </div>
 
-          <hr />
-
           <div className="form-group mb-3">
-            <label htmlFor="nullifierSeed">
-              Nullifier Seed (a random number for generating unique nullifier)
-            </label>
+            <label htmlFor="nullifierSeed">Nullifier Seed (a random number for generating unique nullifier)</label>
             <input
               type="number"
               defaultValue="1"
               maxLength={30}
-              className="form-control"
+              className="form-control border"
               name="nullifierSeed"
               id="nullifierSeed"
             />
           </div>
 
           <div className="form-group mb-3">
-            <label htmlFor="signal">
-              Signal (any message you want to sign as part of the proof)
-            </label>
-            <input type="text" className="form-control" name="signal" id="signal" />
+            <label htmlFor="signal">Signal (any message you want to sign as part of the proof)</label>
+            <input type="text" className="form-control border" name="signal" id="signal" />
           </div>
 
-          <button
-            className="btn btn-submit btn-primary mt-4"
-            type="submit"
-          >
+          <button className="btn btn-submit btn-primary mt-4" type="submit">
             Submit
           </button>
         </form>
@@ -240,4 +202,4 @@ export default function App() {
       </div>
     </div>
   );
-}
+};
