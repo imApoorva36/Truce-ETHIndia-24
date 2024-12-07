@@ -3,14 +3,25 @@
 import React, { useState } from "react";
 import { Car, User, Wallet } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useAccount } from "wagmi"
+import { useScaffoldWatchContractEvent, useScaffoldWriteContract } from "~~/hooks/scaffold-eth"
+import { useAnonAadhaar } from "@anon-aadhaar/react"
+import {
+  AnonAadhaarCore,
+  deserialize,
+  packGroth16Proof,
+} from "@anon-aadhaar/core";
 
 const OnboardingForm: React.FC = () => {
   const [formData, setFormData] = useState({
     username: "",
     carRegistration: "",
     carType: "",
-    walletAddress: "",
   });
+  const [anonAadhaar] = useAnonAadhaar();
+
+
+  let { address } = useAccount()
 
   const carTypes = ["2-Wheeler", "4-Wheeler", "Heavy Vehicle"];
 
@@ -22,13 +33,56 @@ const OnboardingForm: React.FC = () => {
     }));
   };
 
-  const router = useRouter();
+  useScaffoldWatchContractEvent({
+    contractName: "Backend",
+    eventName: "UserCreated",
+    // The onLogs function is called whenever a GreetingChange event is emitted by the contract.
+    // Parameters emitted by the event can be destructed using the below example
+    // for this example: event GreetingChange(address greetingSetter, string newGreeting, bool premium, uint256 value);
+    onLogs: logs => {
+      logs.map(log => {
+        const { userAddress, name, vehicleRegistrationNumber } = log.args;
+        if (userAddress == address) {
+          window.localStorage.setItem("user", JSON.stringify({name, vehicleRegistrationNumber}))
+          router.push("/dashboard")
+        }
+      });
+    },
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const router = useRouter();
+  const { writeContractAsync: contract } = useScaffoldWriteContract("Backend")
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    //@ts-ignore
+    const { anonAadhaarProofs } = anonAadhaar
+    let result = await deserialize(anonAadhaarProofs[Object.keys(anonAadhaarProofs).length - 1].pcd)
+    const packedGroth16Proof = packGroth16Proof(result.proof.groth16Proof);
+
     // Add your registration logic here
-    console.log("Form submitted:", formData);
-    router.push("/dashboard");
+    let tx = await contract({
+      functionName: "createUser",
+      args: [
+        formData.username,
+        formData.carRegistration,
+        formData.carType,
+        address,
+        {
+          nullifier1: BigInt(result.proof.nullifier),
+          nullifierSeed1: BigInt(result.proof.nullifierSeed),
+          timestamp: BigInt(result.proof.timestamp),
+          revealArray: [
+            BigInt(result.proof.ageAbove18),
+            BigInt(result.proof.gender),
+            BigInt(result.proof.pincode),
+            BigInt(result.proof.state),
+          ],
+          groth16Proof1: packedGroth16Proof.map(i => BigInt(i)) as [bigint, bigint, bigint, bigint, bigint, bigint, bigint, bigint]
+        },
+      ]
+    })
+    // router.push("/dashboard");
   };
 
   return (
@@ -97,7 +151,8 @@ const OnboardingForm: React.FC = () => {
                   name="walletAddress"
                   placeholder="Wallet Address"
                   className="grow"
-                  value={formData.walletAddress}
+                  value={address}
+                  disabled={true}
                   onChange={handleInputChange}
                   required
                 />

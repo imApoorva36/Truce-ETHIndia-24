@@ -1,6 +1,8 @@
 "use client";
 
-import React from "react";
+import { Router } from "lucide-react"
+import { useRouter } from "next/navigation"
+import React, { useEffect, useState } from "react";
 import { Address } from "viem";
 import { useAccount } from "wagmi";
 import { Balance } from "~~/components/scaffold-eth";
@@ -12,6 +14,19 @@ export default function HomeDashboard() {
   const account = { address: connectedAddress };
   const { targetNetwork } = useTargetNetwork();
   const chain = targetNetwork;
+  let router = useRouter()
+  let [ user, setUser ] = useState<any>(false)
+
+  console.log(user)
+
+  useEffect(() => {
+    if (!window.localStorage.getItem("user")) {
+      router.push("/register")
+      return
+    }
+
+    setUser(JSON.parse(window.localStorage.getItem("user") || ""))
+  }, [])
 
   return (
     <div className="min-h-screen bg-base-100 p-4">
