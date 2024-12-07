@@ -35,12 +35,12 @@ contract Backend {
         uint256 timestamp;
         uint256[4] revealArray;
         uint256[8] groth16Proof1;
-        uint256 nullifier2;
-        uint256 nullifierSeed2;
-        uint256 documentType;
-        uint256 reveal;
-        uint256 signal;
-        uint256[8] groth16Proof2;
+        // uint256 nullifier2;
+        // uint256 nullifierSeed2;
+        // uint256 documentType;
+        // uint256 reveal;
+        // uint256 signal;
+        // uint256[8] groth16Proof2;
     }
 
     uint256 public totalRewardPool;
@@ -144,15 +144,15 @@ contract Backend {
         );
         require(isValid, '[AnonAadhaarVote]: proof sent is not valid.');
 
-        bool isValid2 = verifyDigiLocker(
-            params.groth16Proof2,
-            params.nullifier2,
-            params.documentType,
-            params.reveal,
-            params.nullifierSeed2,
-            params.signal
-        );
-        require(isValid || isValid2, 'Proof sent is not valid.');
+        // bool isValid2 = verifyDigiLocker(
+        //     params.groth16Proof2,
+        //     params.nullifier2,
+        //     params.documentType,
+        //     params.reveal,
+        //     params.nullifierSeed2,
+        //     params.signal
+        // );
+        // require(isValid || isValid2, 'Proof sent is not valid.');
         // require(isValid2, '[AnonAadhaarVote]: DL Proof sent is not valid.');
 
         users[msg.sender] = User({

@@ -248,7 +248,7 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
     Backend: {
-      address: "0x7c3c329B828042AaBF4e936FdAEc29893A4d5eeE",
+      address: "0xE0d56d7238F7C738f971FA09818EBCa2a57d862f",
       abi: [
         {
           inputs: [
@@ -452,36 +452,6 @@ const deployedContracts = {
                 {
                   internalType: "uint256[8]",
                   name: "groth16Proof1",
-                  type: "uint256[8]",
-                },
-                {
-                  internalType: "uint256",
-                  name: "nullifier2",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "nullifierSeed2",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "documentType",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "reveal",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "signal",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256[8]",
-                  name: "groth16Proof2",
                   type: "uint256[8]",
                 },
               ],
