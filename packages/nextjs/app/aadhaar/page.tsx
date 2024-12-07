@@ -22,7 +22,7 @@ const aadhaar: NextPage = () => {
 
   useEffect(() => {
     if (anonAadhaar.status === "logged-in") {
-      router.push("/");
+      router.push("./verified");
     }
   }, [anonAadhaar, router]);
 

@@ -30,7 +30,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
 
   await deploy("AnonAadhaarVote", {
     from: deployer,
-    args: ["Voting Question", ["Proposal 1", "Proposal 2"], deployer], // Replace with actual arguments
+    args: ["Voting Question", ["Proposal 1", "Proposal 2"], '0xC4C4d6c21F1D8e4591a69f7662b6EcE0f2f0E61b'], // Replace with actual arguments
     log: true,
     autoMine: true,
   });

@@ -103,7 +103,7 @@ const config: HardhatUserConfig = {
       accounts: [deployerPrivateKey],
     },
     baseSepolia: {
-      url: "https://sepolia.base.org",  // Correct RPC URL for Base Sepolia
+      url: `https://base-sepolia.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`,  // Correct RPC URL for Base Sepolia
       accounts: [deployerPrivateKey],  // Same private key as Sepolia
       chainId: 84532,  // Base Sepolia chain ID
     },

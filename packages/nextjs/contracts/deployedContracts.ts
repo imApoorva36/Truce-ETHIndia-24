@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   84532: {
     AnonAadhaarVote: {
-      address: "0x334311E7dd6A0A21424A8736f804b93A5BEe9453",
+      address: "0x0597830Bf4809DDa7A8bA6A89e31EcbFB5eb181c",
       abi: [
         {
           inputs: [
@@ -216,11 +216,6 @@ const deployedContracts = {
               type: "uint256",
             },
             {
-              internalType: "uint256",
-              name: "signal",
-              type: "uint256",
-            },
-            {
               internalType: "uint256[4]",
               name: "revealArray",
               type: "uint256[4]",
@@ -233,7 +228,7 @@ const deployedContracts = {
           ],
           name: "voteForProposal",
           outputs: [],
-          stateMutability: "nonpayable",
+          stateMutability: "payable",
           type: "function",
         },
         {
@@ -253,7 +248,7 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
     YourContract: {
-      address: "0x41771837511cB83394D8F944A9EA4DBEe843106E",
+      address: "0xa0e8F50F5c8af7170d4Cc211CB2829966355BD6A",
       abi: [
         {
           inputs: [],
