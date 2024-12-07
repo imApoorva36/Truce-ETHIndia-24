@@ -1,27 +1,52 @@
-// pages/index.js
+"use client";
+
 import React from "react";
+import { Address } from "viem";
+import { useAccount } from "wagmi";
+import { Balance } from "~~/components/scaffold-eth";
+import ViolationsTable from "~~/components/violations-table";
+import { useTargetNetwork } from "~~/hooks/scaffold-eth";
 
 export default function HomeDashboard() {
+  const { address: connectedAddress } = useAccount();
+  const account = { address: connectedAddress };
+  const { targetNetwork } = useTargetNetwork();
+  const chain = targetNetwork;
+
   return (
     <div className="min-h-screen bg-base-100 p-4">
       {/* Top Section */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div className="card bg-primary text-primary-content shadow-lg">
           <div className="card-body">
-            <h2 className="card-title">Wallet Balance</h2>
-            <p>₹10,000</p>
+            <h2 className="card-title text-center">Wallet Balance</h2>
+            {account.address ? (
+              <>
+                <Balance address={account.address as Address} className="text-xl text-center" />
+                {chain && <span className="text-md text-center">{chain.name}</span>}
+              </>
+            ) : (
+              <p className="text-center text-red-500">No wallet connected</p>
+            )}
           </div>
         </div>
         <div className="card bg-secondary text-secondary-content shadow-lg">
           <div className="card-body">
             <h2 className="card-title">Total Fines Paid</h2>
-            <p>₹2,500</p>
+            <div className="flex items-center justify-center text-xl">
+              <span>0.001</span>
+              <span className="text-[0.8em] font-bold ml-1">{targetNetwork.nativeCurrency.symbol}</span>
+            </div>
+            {chain && <span className="text-md text-center">{chain.name}</span>}
           </div>
         </div>
         <div className="card bg-secondary text-accent-content shadow-lg">
           <div className="card-body">
             <h2 className="card-title">Rewards Earned</h2>
-            <p>₹500</p>
+            <div className="flex items-center justify-center text-xl">
+              <span>100</span>
+            </div>
+            <span className="text-md text-center">Points</span>
           </div>
         </div>
       </div>
@@ -30,42 +55,8 @@ export default function HomeDashboard() {
       <div className="card bg-base-200 shadow-lg mb-6">
         <div className="card-body">
           <h2 className="card-title">Recent Violations</h2>
-          <div className="overflow-x-auto">
-            <table className="table table-zebra w-full">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Violation</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th>1</th>
-                  <td>Speeding</td>
-                  <td className="text-red-500">Pending</td>
-                </tr>
-                <tr>
-                  <th>2</th>
-                  <td>Wrong Parking</td>
-                  <td className="text-green-500">Paid</td>
-                </tr>
-                <tr>
-                  <th>3</th>
-                  <td>Signal Jump</td>
-                  <td className="text-yellow-500">Appealed</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <ViolationsTable />
         </div>
-      </div>
-
-      {/* Bottom Section */}
-      <div className="flex flex-wrap gap-4 justify-center">
-        <button className="btn btn-primary w-full md:w-auto">View Fines</button>
-        <button className="btn btn-primary w-full md:w-auto">Claim Rewards</button>
-        <button className="btn btn-secondary w-full md:w-auto">Appeal Fine</button>
       </div>
     </div>
   );
