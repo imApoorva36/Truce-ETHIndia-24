@@ -2,6 +2,8 @@ import cv2
 from ultralytics import YOLO
 from speed import SpeedDirEstimator
 import argparse
+from report_violation import reporter
+from time import sleep
 
 parser = argparse.ArgumentParser(description="Video processing script.")
 parser.add_argument('--video', type=str, required=True, help="Path to the video file.")
@@ -51,31 +53,53 @@ speed_obj = SpeedDirEstimator(reg_pts=line_pts, names=names)
 cap = cv2.VideoCapture(args.video)
 
 count = 0
-while True:
-    ret, frame = cap.read()
 
-    if not ret:
-        print("Video stream ended or cannot be read.")
-        break
+def process_file(file_path):
+    with open(file_path, "r") as file:
+        for line in file:
+            line = line.strip()  # Remove whitespace or newline characters
+            # Split on the comma
+            args = line.split(", ")
+            if len(args) == 4:  # Ensure exactly two arguments are present
+                reporter(args[0], args[1], int(args[2]), args[3])
+                sleep(5)
+            else:
+                print(f"Skipping malformed line: {line}")
 
-    count += 1
-    if count % 3 != 0:  # Skip some frames for speed (optional)
-        continue
+with open("violations_log.txt", "w") as file:
 
-    frame = cv2.resize(frame, (1020, 500))
-    
-    # Perform object tracking
-    # 1: bicycle  2: car  3: motorcycle  5: bus  7: truck
-    tracks = model.track(frame, persist=True,classes=[1,2,3,5,7])
-    
-    
-    im0 = speed_obj.estimate_speedDir(frame,tracks, is_one_way)
-    
-    # Display the frame with YOLOv8 results
-    cv2.imshow("RGB", frame)
+    while True:
+        ret, frame = cap.read()
 
-    if cv2.waitKey(1) & 0xFF == ord("q"):
-        break
+        if not ret:
+            print("Video stream ended or cannot be read.")
+            break
 
-cap.release()
-cv2.destroyAllWindows()
+        count += 1  
+        if count % 3 != 0:  # Skip some frames for speed (optional)
+            continue
+
+        frame = cv2.resize(frame, (1020, 500))
+        
+        # Perform object tracking
+        # 1: bicycle  2: car  3: motorcycle  5: bus  7: truck
+        tracks = model.track(frame, persist=True,classes=[1,2,3,5,7])
+        
+        
+        im0 = speed_obj.estimate_speedDir(frame,tracks, is_one_way, file)
+        
+        # Display the frame with YOLOv8 results
+        cv2.imshow("RGB", frame)
+
+        if cv2.waitKey(1) & 0xFF == ord("q"):
+            break
+
+    cap.release()
+    cv2.destroyAllWindows()
+
+# Close the log file
+file.close()
+
+# Process the log file
+process_file("violations_log.txt")
+

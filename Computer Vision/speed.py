@@ -2,9 +2,10 @@
 
 from collections import defaultdict
 from time import time
-
+# import datetime
 import cv2
 import numpy as np
+import random
 
 from ultralytics.utils.checks import check_imshow
 from ultralytics.utils.plotting import Annotator, colors
@@ -42,8 +43,11 @@ class SpeedDirEstimator:
 
         # Check if the environment supports imshow
         self.env_check = check_imshow(warn=True)
+        self.reported_ids_speed = []
+        self.reported_ids_dir = []
+        self.locs = ['Main Circle', 'Highway']
 
-    def estimate_speedDir(self, im0, tracks, is_one_way):
+    def estimate_speedDir(self, im0, tracks, is_one_way, file):
         """
         Estimates the speed of objects based on tracking data.
 
@@ -83,8 +87,14 @@ class SpeedDirEstimator:
             if t_id in self.spd:
                 speed = int(self.spd[t_id])
                 speed_label = f"{speed} km/h"
-                if speed > overspeed[int(cls)]:  # Check if speed is over the limit
+                if speed > overspeed[int(cls)] and t_id not in self.reported_ids_speed:  # Check if speed is over the limit
                     speed_label = f"{speed} km/h (Overspeed)"
+                    timestamp = int(time()) & ((1 << 256) - 1)
+                    
+                    area = random.choice(self.locs)
+                    file.write(f"0x40ead570f73f472a95D57Bd95d3792E837C9b51E, Speeding, {timestamp}, {area}\n")
+                    self.reported_ids_speed.append(t_id)
+                    # reporter(reg_num="0x40ead570f73f472a95D57Bd95d3792E837C9b51E", violation="Speeding")
             else:
                 speed_label = self.names[int(cls)]
 
@@ -101,8 +111,13 @@ class SpeedDirEstimator:
                 motion_direction = "N/A"
 
             if is_one_way:
-                if motion_direction == "B":
+                if motion_direction == "B" and t_id not in self.reported_ids_dir:
                     dir_flag = "Wrong Way"
+                    timestamp = int(time()) & ((1 << 256) - 1)
+                    area = random.choice(self.locs)
+                    # reporter(reg_num="0x40ead570f73f472a95D57Bd95d3792E837C9b51E", violation="Wrong Way")
+                    file.write(f"0x40ead570f73f472a95D57Bd95d3792E837C9b51E, Wrong Way, {timestamp}, {area}\n")
+                    self.reported_ids_dir.append(t_id)
                 else:
                     dir_flag = ""
             else:
