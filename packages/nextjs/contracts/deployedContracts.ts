@@ -248,7 +248,7 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
     Backend: {
-      address: "0xa4e1D21AfB844d3dAD1db4FDcC2cE22268E5633f",
+      address: "0xeD4A6D34d5C4FfC39a097Ac2156D54019fA3DdAA",
       abi: [
         {
           inputs: [
@@ -370,6 +370,49 @@ const deployedContracts = {
           ],
           name: "ViolationReported",
           type: "event",
+        },
+        {
+          inputs: [],
+          name: "addDailyPoints",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "_basename",
+              type: "string",
+            },
+            {
+              internalType: "uint256",
+              name: "_points",
+              type: "uint256",
+            },
+          ],
+          name: "addPoints",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_user",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "_newReward",
+              type: "uint256",
+            },
+          ],
+          name: "addUserReward",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
         },
         {
           inputs: [
@@ -861,49 +904,6 @@ const deployedContracts = {
             },
           ],
           stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "updateDailyPoints",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "_user",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "_points",
-              type: "uint256",
-            },
-          ],
-          name: "updatePoints",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "_user",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "_newReward",
-              type: "uint256",
-            },
-          ],
-          name: "updateUserReward",
-          outputs: [],
-          stateMutability: "nonpayable",
           type: "function",
         },
         {

@@ -72,10 +72,10 @@ contract Backend {
     // ---------------------- REWARDS SYSTEM FUNCTIONS ----------------------
 
     // Function to add to the total reward pool
-    function updateUserReward(address _user, uint256 _newReward) public {
+    function addUserReward(address _user, uint256 _newReward) public {
         require(users[_user].walletAddress != address(0), "User does not exist");
 
-        users[_user].rewardBalance = _newReward;
+        users[_user].rewardBalance += _newReward;
         emit RewardUpdated(_user, _newReward);
     }
 
@@ -236,11 +236,18 @@ contract Backend {
         emit FinePaid(_user, _violationIndex, msg.value);
     }
 
-    function updatePoints(address _user, uint256 _points) public {
-        require(users[_user].walletAddress != address(0), "User does not exist");
-        totalpoints-=users[_user].points;
-        users[_user].points = _points;
-        totalpoints+=users[_user].points;
+    function addPoints(string memory _basename, uint256 _points) public {
+        address userAddress;
+        for (uint i = 0; i < allUsers.length; i++) {
+            if (keccak256(bytes(users[allUsers[i]].basename)) == keccak256(bytes(_basename))) {
+                userAddress = allUsers[i];
+                break;
+            }
+        }
+        require(userAddress != address(0), "User not found");
+        
+        users[userAddress].points += _points;
+        totalpoints += _points;
     }
 
     function convertPointsToRewards() public {
@@ -375,7 +382,7 @@ contract Backend {
     }
 
     // Add this new function for daily points update
-    function updateDailyPoints() public {
+    function addDailyPoints() public {
         uint256 totalUsers = allUsers.length;
         for (uint256 i = 0; i < totalUsers; i++) {
             address userAddr = allUsers[i];
