@@ -18,7 +18,7 @@ export default function HomeDashboard() {
             <p>₹2,500</p>
           </div>
         </div>
-        <div className="card bg-accent text-accent-content shadow-lg">
+        <div className="card bg-secondary text-accent-content shadow-lg">
           <div className="card-body">
             <h2 className="card-title">Rewards Earned</h2>
             <p>₹500</p>
@@ -64,7 +64,7 @@ export default function HomeDashboard() {
       {/* Bottom Section */}
       <div className="flex flex-wrap gap-4 justify-center">
         <button className="btn btn-primary w-full md:w-auto">View Fines</button>
-        <button className="btn btn-accent w-full md:w-auto">Claim Rewards</button>
+        <button className="btn btn-primary w-full md:w-auto">Claim Rewards</button>
         <button className="btn btn-secondary w-full md:w-auto">Appeal Fine</button>
       </div>
     </div>
