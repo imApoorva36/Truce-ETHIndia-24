@@ -1,0 +1,400 @@
+{
+  "address": "0x334311E7dd6A0A21424A8736f804b93A5BEe9453",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_votingQuestion",
+          "type": "string"
+        },
+        {
+          "internalType": "string[]",
+          "name": "proposalDescriptions",
+          "type": "string[]"
+        },
+        {
+          "internalType": "address",
+          "name": "_verifierAddr",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "_from",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "_propositionIndex",
+          "type": "uint256"
+        }
+      ],
+      "name": "Voted",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "anonAadhaarVerifierAddr",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_nullifier",
+          "type": "uint256"
+        }
+      ],
+      "name": "checkVoted",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "proposalIndex",
+          "type": "uint256"
+        }
+      ],
+      "name": "getProposal",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getProposalCount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getTotalVotes",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "hasVoted",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        }
+      ],
+      "name": "isLessThan3HoursAgo",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "proposals",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "voteCount",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "proposalIndex",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "nullifierSeed",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "nullifier",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "signal",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256[4]",
+          "name": "revealArray",
+          "type": "uint256[4]"
+        },
+        {
+          "internalType": "uint256[8]",
+          "name": "groth16Proof",
+          "type": "uint256[8]"
+        }
+      ],
+      "name": "voteForProposal",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "votingQuestion",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x84b250229bb01f80da4811da4b54f6b02bf4fb4724412da4aa520ca9629f7855",
+  "receipt": {
+    "to": null,
+    "from": "0x5a4983927dCEe4aF40E5829Eb890698e63C9e3ce",
+    "contractAddress": "0x334311E7dd6A0A21424A8736f804b93A5BEe9453",
+    "transactionIndex": 6,
+    "gasUsed": "810959",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0xe80eda463634ab3c5162dcf2fc0fd6ef9ad565c9a7e9eb80e32d07dd97e16137",
+    "transactionHash": "0x84b250229bb01f80da4811da4b54f6b02bf4fb4724412da4aa520ca9629f7855",
+    "logs": [],
+    "blockNumber": 18884427,
+    "cumulativeGasUsed": "1916619",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [
+    "Voting Question",
+    [
+      "Proposal 1",
+      "Proposal 2"
+    ],
+    "0x5a4983927dCEe4aF40E5829Eb890698e63C9e3ce"
+  ],
+  "numDeployments": 1,
+  "solcInputHash": "d1bfd661fc84deb46f3539012ce22dfa",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_votingQuestion\",\"type\":\"string\"},{\"internalType\":\"string[]\",\"name\":\"proposalDescriptions\",\"type\":\"string[]\"},{\"internalType\":\"address\",\"name\":\"_verifierAddr\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"_from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"_propositionIndex\",\"type\":\"uint256\"}],\"name\":\"Voted\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"anonAadhaarVerifierAddr\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_nullifier\",\"type\":\"uint256\"}],\"name\":\"checkVoted\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"proposalIndex\",\"type\":\"uint256\"}],\"name\":\"getProposal\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getProposalCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getTotalVotes\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"hasVoted\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"isLessThan3HoursAgo\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"proposals\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"description\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"voteCount\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"proposalIndex\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"nullifierSeed\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"nullifier\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"signal\",\"type\":\"uint256\"},{\"internalType\":\"uint256[4]\",\"name\":\"revealArray\",\"type\":\"uint256[4]\"},{\"internalType\":\"uint256[8]\",\"name\":\"groth16Proof\",\"type\":\"uint256[8]\"}],\"name\":\"voteForProposal\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"votingQuestion\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"isLessThan3HoursAgo(uint256)\":{\"details\":\"Check if the timestamp is more recent than (current time - 3 hours)\",\"params\":{\"timestamp\":\": msg.sender address.\"},\"returns\":{\"_0\":\"bool\"}},\"voteForProposal(uint256,uint256,uint256,uint256,uint256,uint256[4],uint256[8])\":{\"details\":\"Register a vote in the contract.\",\"params\":{\"groth16Proof\":\": SNARK Groth16 proof.\",\"nullifier\":\": Nullifier for the user's Aadhaar data.\",\"nullifierSeed\":\": Nullifier Seed used while generating the proof.\",\"proposalIndex\":\": Index of the proposal you want to vote for.\",\"revealArray\":\": Array of the values used as input for the proof generation (equal to [0, 0, 0, 0] if no field reveal were asked).\",\"signal\":\": signal used while generating the proof, should be equal to msg.sender.\",\"timestamp\":\": Timestamp of when the QR code was signed.\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/YourContract.sol\":\"AnonAadhaarVote\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"@anon-aadhaar/contracts/interfaces/IAnonAadhaar.sol\":{\"content\":\"// SPDX-License-Identifier: GPL-3.0\\npragma solidity ^0.8.19;\\n\\ninterface IAnonAadhaar {\\n    function verifyAnonAadhaarProof(\\n        uint nullifierSeed,\\n        uint nullifier,\\n        uint timestamp,\\n        uint signal,\\n        uint[4] memory revealArray,\\n        uint[8] memory groth16Proof\\n    ) external view returns (bool);\\n}\\n\",\"keccak256\":\"0x3d0247e04707d2266471efeef4ab38ecf879cc286217ad5f624d966608e8964d\",\"license\":\"GPL-3.0\"},\"@anon-aadhaar/contracts/interfaces/IAnonAadhaarVote.sol\":{\"content\":\"// SPDX-License-Identifier: GPL-3.0\\npragma solidity ^0.8.19;\\n\\ninterface IAnonAadhaarVote {\\n\\n    struct Proposal {\\n        string description;\\n        uint256 voteCount;\\n    }\\n\\n    event Voted(address indexed _from, uint256 indexed _propositionIndex);\\n}\",\"keccak256\":\"0xd67f99d608c3765f289f7561231f806ab439964dca134728973be60dee700eb0\",\"license\":\"GPL-3.0\"},\"contracts/YourContract.sol\":{\"content\":\"pragma solidity >=0.8.0 <0.9.0;\\r\\n\\r\\ncontract YourContract {\\r\\n    struct User {\\r\\n        string name;\\r\\n        string vehicleRegistrationNumber;\\r\\n        address walletAddress;\\r\\n        uint256 pendingFines;\\r\\n    }\\r\\n\\r\\n    struct Violation {\\r\\n        uint256 time;\\r\\n        string violationType;\\r\\n        address reportedBy;\\r\\n        bool isPaid;\\r\\n        uint256 fineAmount;\\r\\n    }\\r\\n\\r\\n    mapping(address => User) public users;\\r\\n    mapping(string => address) public vehicleToUser;\\r\\n    mapping(address => Violation[]) userViolations;\\r\\n    mapping(address => uint256) public finesPaid;\\r\\n    mapping(string => uint256) public violationFines;\\r\\n\\r\\n    event UserCreated(address indexed userAddress, string name, string vehicleRegistrationNumber);\\r\\n    event ViolationReported(address indexed user, string violationType, address reportedBy, uint256 fineAmount);\\r\\n    event FinePaid(address indexed user, uint256 violationIndex, uint256 amount);\\r\\n\\r\\n    constructor() {\\r\\n        // Initialize some dummy fine amounts for violation types\\r\\n        violationFines[\\\"Speeding\\\"] = 100;\\r\\n        violationFines[\\\"Parking\\\"] = 50;\\r\\n        violationFines[\\\"Red Light\\\"] = 200;\\r\\n    }\\r\\n\\r\\n    // Create a new user\\r\\n    function createUser(string memory _name, string memory _vehicleRegistrationNumber) public {\\r\\n        require(users[msg.sender].walletAddress == address(0), \\\"User already exists\\\");\\r\\n        users[msg.sender] = User({\\r\\n            name: _name,\\r\\n            vehicleRegistrationNumber: _vehicleRegistrationNumber,\\r\\n            walletAddress: msg.sender,\\r\\n            pendingFines: 0\\r\\n        });\\r\\n        vehicleToUser[_vehicleRegistrationNumber] = msg.sender;\\r\\n        emit UserCreated(msg.sender, _name, _vehicleRegistrationNumber);\\r\\n    }\\r\\n\\r\\n    // Report a violation\\r\\n    function reportViolation(address _user, string memory _violationType) public {\\r\\n        require(users[_user].walletAddress != address(0), \\\"User does not exist\\\");\\r\\n        require(violationFines[_violationType] > 0, \\\"Invalid violation type\\\");\\r\\n\\r\\n        uint256 fineAmount = violationFines[_violationType];\\r\\n        userViolations[_user].push(Violation({\\r\\n            time: block.timestamp,\\r\\n            violationType: _violationType,\\r\\n            reportedBy: msg.sender,\\r\\n            isPaid: false,\\r\\n            fineAmount: fineAmount\\r\\n        }));\\r\\n        users[_user].pendingFines++;\\r\\n        emit ViolationReported(_user, _violationType, msg.sender, fineAmount);\\r\\n    }\\r\\n\\r\\n    // Fetch all violations of a user\\r\\n    function getUserViolations(address _user) public view returns (Violation[] memory) {\\r\\n        return userViolations[_user];\\r\\n    }\\r\\n\\r\\n    // Pay a fine\\r\\n    function payFine(address _user, uint256 _violationIndex) public payable {\\r\\n        require(users[_user].walletAddress != address(0), \\\"User does not exist\\\");\\r\\n        require(_violationIndex < userViolations[_user].length, \\\"Invalid violation index\\\");\\r\\n        require(!userViolations[_user][_violationIndex].isPaid, \\\"Fine already paid\\\");\\r\\n\\r\\n        Violation storage violation = userViolations[_user][_violationIndex];\\r\\n        require(msg.value == violation.fineAmount, \\\"Payment must be equal to the fine amount\\\");\\r\\n\\r\\n        violation.isPaid = true;\\r\\n        users[_user].pendingFines--;\\r\\n        finesPaid[_user] += msg.value;\\r\\n        emit FinePaid(_user, _violationIndex, msg.value);\\r\\n    }\\r\\n}\\r\\n\\r\\n// SPDX-License-Identifier: GPL-3.0\\r\\npragma solidity ^0.8.19;\\r\\n\\r\\nimport '@anon-aadhaar/contracts/interfaces/IAnonAadhaar.sol';\\r\\nimport '@anon-aadhaar/contracts/interfaces/IAnonAadhaarVote.sol';\\r\\n\\r\\ncontract AnonAadhaarVote is IAnonAadhaarVote {\\r\\n    string public votingQuestion;\\r\\n    address public anonAadhaarVerifierAddr;\\r\\n\\r\\n    // List of proposals\\r\\n    Proposal[] public proposals;\\r\\n\\r\\n    // Mapping to track if a userNullifier has already voted\\r\\n    mapping(uint256 => bool) public hasVoted;\\r\\n\\r\\n    // Constructor to initialize proposals\\r\\n    constructor(\\r\\n        string memory _votingQuestion,\\r\\n        string[] memory proposalDescriptions,\\r\\n        address _verifierAddr\\r\\n    ) {\\r\\n        anonAadhaarVerifierAddr = _verifierAddr;\\r\\n        votingQuestion = _votingQuestion;\\r\\n        for (uint256 i = 0; i < proposalDescriptions.length; i++) {\\r\\n            proposals.push(Proposal(proposalDescriptions[i], 0));\\r\\n        }\\r\\n    }\\r\\n\\r\\n    /// @dev Convert an address to uint256, used to check against signal.\\r\\n    /// @param _addr: msg.sender address.\\r\\n    /// @return Address msg.sender's address in uint256\\r\\n    function addressToUint256(address _addr) private pure returns (uint256) {\\r\\n        return uint256(uint160(_addr));\\r\\n    }\\r\\n\\r\\n    /// @dev Check if the timestamp is more recent than (current time - 3 hours)\\r\\n    /// @param timestamp: msg.sender address.\\r\\n    /// @return bool\\r\\n    function isLessThan3HoursAgo(uint timestamp) public view returns (bool) {\\r\\n        return timestamp > (block.timestamp - 3 * 60 * 60);\\r\\n    }\\r\\n\\r\\n    /// @dev Register a vote in the contract.\\r\\n    /// @param proposalIndex: Index of the proposal you want to vote for.\\r\\n    /// @param nullifierSeed: Nullifier Seed used while generating the proof.\\r\\n    /// @param nullifier: Nullifier for the user's Aadhaar data.\\r\\n    /// @param timestamp: Timestamp of when the QR code was signed.\\r\\n    /// @param signal: signal used while generating the proof, should be equal to msg.sender.\\r\\n    /// @param revealArray: Array of the values used as input for the proof generation (equal to [0, 0, 0, 0] if no field reveal were asked).\\r\\n    /// @param groth16Proof: SNARK Groth16 proof.\\r\\n    function voteForProposal(\\r\\n        uint256 proposalIndex,\\r\\n        uint nullifierSeed,\\r\\n        uint nullifier,\\r\\n        uint timestamp,\\r\\n        uint signal,\\r\\n        uint[4] memory revealArray, \\r\\n        uint[8] memory groth16Proof\\r\\n    ) public {\\r\\n        require(\\r\\n            proposalIndex < proposals.length,\\r\\n            '[AnonAadhaarVote]: Invalid proposal index'\\r\\n        );\\r\\n        require(\\r\\n            addressToUint256(msg.sender) == signal,\\r\\n            '[AnonAadhaarVote]: wrong user signal sent.'\\r\\n        );\\r\\n        require(\\r\\n            isLessThan3HoursAgo(timestamp) == true,\\r\\n            '[AnonAadhaarVote]: Proof must be generated with Aadhaar data generated less than 3 hours ago.'\\r\\n        );\\r\\n        require(\\r\\n            IAnonAadhaar(anonAadhaarVerifierAddr).verifyAnonAadhaarProof(\\r\\n                nullifierSeed, // nulifier seed\\r\\n                nullifier,\\r\\n                timestamp,\\r\\n                signal,\\r\\n                revealArray,\\r\\n                groth16Proof\\r\\n            ) == true,\\r\\n            '[AnonAadhaarVote]: proof sent is not valid.'\\r\\n        );\\r\\n        // Check that user hasn't already voted\\r\\n        require(\\r\\n            !hasVoted[nullifier],\\r\\n            '[AnonAadhaarVote]: User has already voted'\\r\\n        );\\r\\n\\r\\n        proposals[proposalIndex].voteCount++;\\r\\n        hasVoted[nullifier] = true;\\r\\n\\r\\n        emit Voted(msg.sender, proposalIndex);\\r\\n    }\\r\\n\\r\\n    // Function to get the total number of proposals\\r\\n    function getProposalCount() public view returns (uint256) {\\r\\n        return proposals.length;\\r\\n    }\\r\\n\\r\\n    // Function to get proposal information by index\\r\\n    function getProposal(\\r\\n        uint256 proposalIndex\\r\\n    ) public view returns (string memory, uint256) {\\r\\n        require(\\r\\n            proposalIndex < proposals.length,\\r\\n            '[AnonAadhaarVote]: Invalid proposal index'\\r\\n        );\\r\\n\\r\\n        Proposal memory proposal = proposals[proposalIndex];\\r\\n        return (proposal.description, proposal.voteCount);\\r\\n    }\\r\\n\\r\\n    // Function to get the total number of votes across all proposals\\r\\n    function getTotalVotes() public view returns (uint256) {\\r\\n        uint256 totalVotes = 0;\\r\\n        for (uint256 i = 0; i < proposals.length; i++) {\\r\\n            totalVotes += proposals[i].voteCount;\\r\\n        }\\r\\n        return totalVotes;\\r\\n    }\\r\\n\\r\\n    // Function to check if a user has already voted\\r\\n    function checkVoted(uint256 _nullifier) public view returns (bool) {\\r\\n        return hasVoted[_nullifier];\\r\\n    }\\r\\n}\",\"keccak256\":\"0x7d22da9285324ca06cd799397a3e7c95a55800db2352d122bd511a4c5acc7984\",\"license\":\"GPL-3.0\"}},\"version\":1}",
+  "bytecode": "0x60806040523480156200001157600080fd5b5060405162000fcb38038062000fcb8339810160408190526200003491620001e7565b600180546001600160a01b0319166001600160a01b03831617905560006200005d84826200037f565b5060005b8251811015620000ea57600260405180604001604052808584815181106200008d576200008d6200044b565b60209081029190910181015182526000918101829052835460018101855593825290208151919260020201908190620000c790826200037f565b506020820151816001015550508080620000e19062000461565b91505062000061565b5050505062000489565b634e487b7160e01b600052604160045260246000fd5b604051601f8201601f191681016001600160401b0381118282101715620001355762000135620000f4565b604052919050565b600082601f8301126200014f57600080fd5b81516001600160401b038111156200016b576200016b620000f4565b602062000181601f8301601f191682016200010a565b82815285828487010111156200019657600080fd5b60005b83811015620001b657858101830151828201840152820162000199565b506000928101909101919091529392505050565b80516001600160a01b0381168114620001e257600080fd5b919050565b600080600060608486031215620001fd57600080fd5b83516001600160401b03808211156200021557600080fd5b62000223878388016200013d565b94506020915081860151818111156200023b57600080fd5b8601601f810188136200024d57600080fd5b805182811115620002625762000262620000f4565b8060051b620002738582016200010a565b918252828101850191858101908b8411156200028e57600080fd5b86850192505b83831015620002cf57825186811115620002ae5760008081fd5b620002be8d89838901016200013d565b835250918601919086019062000294565b80985050505050505050620002e760408501620001ca565b90509250925092565b600181811c908216806200030557607f821691505b6020821081036200032657634e487b7160e01b600052602260045260246000fd5b50919050565b601f8211156200037a57600081815260208120601f850160051c81016020861015620003555750805b601f850160051c820191505b81811015620003765782815560010162000361565b5050505b505050565b81516001600160401b038111156200039b576200039b620000f4565b620003b381620003ac8454620002f0565b846200032c565b602080601f831160018114620003eb5760008415620003d25750858301515b600019600386901b1c1916600185901b17855562000376565b600085815260208120601f198616915b828110156200041c57888601518255948401946001909101908401620003fb565b50858210156200043b5787850151600019600388901b60f8161c191681555b5050505050600190811b01905550565b634e487b7160e01b600052603260045260246000fd5b6000600182016200048257634e487b7160e01b600052601160045260246000fd5b5060010190565b610b3280620004996000396000f3fe608060405234801561001057600080fd5b506004361061009e5760003560e01c80637f7658ff116100665780637f7658ff146101535780639a0e7d6614610168578063c08cc02d1461017e578063c7f758a814610186578063ecca031f1461019957600080fd5b8063013cf08b146100a35780630dbffbcd146100cd5780631ec7ea8f146100f8578063470d8c2c1461011b57806362756a011461013e575b600080fd5b6100b66100b136600461077d565b6101bc565b6040516100c49291906107dc565b60405180910390f35b6001546100e0906001600160a01b031681565b6040516001600160a01b0390911681526020016100c4565b61010b61010636600461077d565b610278565b60405190151581526020016100c4565b61010b61012936600461077d565b60009081526003602052604090205460ff1690565b61015161014c3660046108a3565b61028e565b005b61015b610593565b6040516100c49190610956565b610170610621565b6040519081526020016100c4565b600254610170565b6100b661019436600461077d565b61067a565b61010b6101a736600461077d565b60036020526000908152604090205460ff1681565b600281815481106101cc57600080fd5b90600052602060002090600202016000915090508060000180546101ef90610970565b80601f016020809104026020016040519081016040528092919081815260200182805461021b90610970565b80156102685780601f1061023d57610100808354040283529160200191610268565b820191906000526020600020905b81548152906001019060200180831161024b57829003601f168201915b5050505050908060010154905082565b6000610286612a30426109ba565b909111919050565b60025487106102b85760405162461bcd60e51b81526004016102af906109d3565b60405180910390fd5b82331461031a5760405162461bcd60e51b815260206004820152602a60248201527f5b416e6f6e41616468616172566f74655d3a2077726f6e67207573657220736960448201526933b730b61039b2b73a1760b11b60648201526084016102af565b61032384610278565b15156001146103c05760405162461bcd60e51b815260206004820152605d60248201527f5b416e6f6e41616468616172566f74655d3a2050726f6f66206d75737420626560448201527f2067656e6572617465642077697468204161646861617220646174612067656e60648201527f657261746564206c657373207468616e203320686f7572732061676f2e000000608482015260a4016102af565b6001546040516350de0e5760e01b81526001600160a01b03909116906350de0e57906103fa90899089908990899089908990600401610a1c565b602060405180830381865afa158015610417573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061043b9190610a98565b15156001146104a05760405162461bcd60e51b815260206004820152602b60248201527f5b416e6f6e41616468616172566f74655d3a2070726f6f662073656e7420697360448201526a103737ba103b30b634b21760a91b60648201526084016102af565b60008581526003602052604090205460ff16156105115760405162461bcd60e51b815260206004820152602960248201527f5b416e6f6e41616468616172566f74655d3a20557365722068617320616c726560448201526818591e481d9bdd195960ba1b60648201526084016102af565b6002878154811061052457610524610aba565b60009182526020822060016002909202010180549161054283610ad0565b9091555050600085815260036020526040808220805460ff1916600117905551889133917f4d99b957a2bc29a30ebd96a7be8e68fe50a3c701db28a91436490b7d53870ca49190a350505050505050565b600080546105a090610970565b80601f01602080910402602001604051908101604052809291908181526020018280546105cc90610970565b80156106195780601f106105ee57610100808354040283529160200191610619565b820191906000526020600020905b8154815290600101906020018083116105fc57829003601f168201915b505050505081565b600080805b600254811015610674576002818154811061064357610643610aba565b906000526020600020906002020160010154826106609190610ae9565b91508061066c81610ad0565b915050610626565b50919050565b60025460609060009083106106a15760405162461bcd60e51b81526004016102af906109d3565b6000600284815481106106b6576106b6610aba565b90600052602060002090600202016040518060400160405290816000820180546106df90610970565b80601f016020809104026020016040519081016040528092919081815260200182805461070b90610970565b80156107585780601f1061072d57610100808354040283529160200191610758565b820191906000526020600020905b81548152906001019060200180831161073b57829003601f168201915b5050509183525050600191909101546020918201528151910151909590945092505050565b60006020828403121561078f57600080fd5b5035919050565b6000815180845260005b818110156107bc576020818501810151868301820152016107a0565b506000602082860101526020601f19601f83011685010191505092915050565b6040815260006107ef6040830185610796565b90508260208301529392505050565b634e487b7160e01b600052604160045260246000fd5b604051610100810167ffffffffffffffff81118282101715610838576108386107fe565b60405290565b6040516080810167ffffffffffffffff81118282101715610838576108386107fe565b600061086b610814565b90508061010083018481111561088057600080fd5b835b8181101561089a578035835260209283019201610882565b50505092915050565b6000806000806000806000610220888a0312156108bf57600080fd5b8735965060208089013596506040890135955060608901359450608089013593508960bf8a01126108ef57600080fd5b6108f761083e565b806101208b018c81111561090a57600080fd5b60a08c015b81811015610926578035845292840192840161090f565b508195508c61013f8d011261093a57600080fd5b6109448d82610861565b94505050505092959891949750929550565b6020815260006109696020830184610796565b9392505050565b600181811c9082168061098457607f821691505b60208210810361067457634e487b7160e01b600052602260045260246000fd5b634e487b7160e01b600052601160045260246000fd5b818103818111156109cd576109cd6109a4565b92915050565b60208082526029908201527f5b416e6f6e41616468616172566f74655d3a20496e76616c69642070726f706f6040820152680e6c2d840d2dcc8caf60bb1b606082015260800190565b60006102008201905087825260208781840152866040840152856060840152608083018560005b6004811015610a6057815183529183019190830190600101610a43565b50505061010083018460005b6008811015610a8957815183529183019190830190600101610a6c565b50505050979650505050505050565b600060208284031215610aaa57600080fd5b8151801515811461096957600080fd5b634e487b7160e01b600052603260045260246000fd5b600060018201610ae257610ae26109a4565b5060010190565b808201808211156109cd576109cd6109a456fea2646970667358221220067aa2d6b27675117ce28046ce5c3ec402f217bdb63d42ad227f6996e01d596764736f6c63430008140033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061009e5760003560e01c80637f7658ff116100665780637f7658ff146101535780639a0e7d6614610168578063c08cc02d1461017e578063c7f758a814610186578063ecca031f1461019957600080fd5b8063013cf08b146100a35780630dbffbcd146100cd5780631ec7ea8f146100f8578063470d8c2c1461011b57806362756a011461013e575b600080fd5b6100b66100b136600461077d565b6101bc565b6040516100c49291906107dc565b60405180910390f35b6001546100e0906001600160a01b031681565b6040516001600160a01b0390911681526020016100c4565b61010b61010636600461077d565b610278565b60405190151581526020016100c4565b61010b61012936600461077d565b60009081526003602052604090205460ff1690565b61015161014c3660046108a3565b61028e565b005b61015b610593565b6040516100c49190610956565b610170610621565b6040519081526020016100c4565b600254610170565b6100b661019436600461077d565b61067a565b61010b6101a736600461077d565b60036020526000908152604090205460ff1681565b600281815481106101cc57600080fd5b90600052602060002090600202016000915090508060000180546101ef90610970565b80601f016020809104026020016040519081016040528092919081815260200182805461021b90610970565b80156102685780601f1061023d57610100808354040283529160200191610268565b820191906000526020600020905b81548152906001019060200180831161024b57829003601f168201915b5050505050908060010154905082565b6000610286612a30426109ba565b909111919050565b60025487106102b85760405162461bcd60e51b81526004016102af906109d3565b60405180910390fd5b82331461031a5760405162461bcd60e51b815260206004820152602a60248201527f5b416e6f6e41616468616172566f74655d3a2077726f6e67207573657220736960448201526933b730b61039b2b73a1760b11b60648201526084016102af565b61032384610278565b15156001146103c05760405162461bcd60e51b815260206004820152605d60248201527f5b416e6f6e41616468616172566f74655d3a2050726f6f66206d75737420626560448201527f2067656e6572617465642077697468204161646861617220646174612067656e60648201527f657261746564206c657373207468616e203320686f7572732061676f2e000000608482015260a4016102af565b6001546040516350de0e5760e01b81526001600160a01b03909116906350de0e57906103fa90899089908990899089908990600401610a1c565b602060405180830381865afa158015610417573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061043b9190610a98565b15156001146104a05760405162461bcd60e51b815260206004820152602b60248201527f5b416e6f6e41616468616172566f74655d3a2070726f6f662073656e7420697360448201526a103737ba103b30b634b21760a91b60648201526084016102af565b60008581526003602052604090205460ff16156105115760405162461bcd60e51b815260206004820152602960248201527f5b416e6f6e41616468616172566f74655d3a20557365722068617320616c726560448201526818591e481d9bdd195960ba1b60648201526084016102af565b6002878154811061052457610524610aba565b60009182526020822060016002909202010180549161054283610ad0565b9091555050600085815260036020526040808220805460ff1916600117905551889133917f4d99b957a2bc29a30ebd96a7be8e68fe50a3c701db28a91436490b7d53870ca49190a350505050505050565b600080546105a090610970565b80601f01602080910402602001604051908101604052809291908181526020018280546105cc90610970565b80156106195780601f106105ee57610100808354040283529160200191610619565b820191906000526020600020905b8154815290600101906020018083116105fc57829003601f168201915b505050505081565b600080805b600254811015610674576002818154811061064357610643610aba565b906000526020600020906002020160010154826106609190610ae9565b91508061066c81610ad0565b915050610626565b50919050565b60025460609060009083106106a15760405162461bcd60e51b81526004016102af906109d3565b6000600284815481106106b6576106b6610aba565b90600052602060002090600202016040518060400160405290816000820180546106df90610970565b80601f016020809104026020016040519081016040528092919081815260200182805461070b90610970565b80156107585780601f1061072d57610100808354040283529160200191610758565b820191906000526020600020905b81548152906001019060200180831161073b57829003601f168201915b5050509183525050600191909101546020918201528151910151909590945092505050565b60006020828403121561078f57600080fd5b5035919050565b6000815180845260005b818110156107bc576020818501810151868301820152016107a0565b506000602082860101526020601f19601f83011685010191505092915050565b6040815260006107ef6040830185610796565b90508260208301529392505050565b634e487b7160e01b600052604160045260246000fd5b604051610100810167ffffffffffffffff81118282101715610838576108386107fe565b60405290565b6040516080810167ffffffffffffffff81118282101715610838576108386107fe565b600061086b610814565b90508061010083018481111561088057600080fd5b835b8181101561089a578035835260209283019201610882565b50505092915050565b6000806000806000806000610220888a0312156108bf57600080fd5b8735965060208089013596506040890135955060608901359450608089013593508960bf8a01126108ef57600080fd5b6108f761083e565b806101208b018c81111561090a57600080fd5b60a08c015b81811015610926578035845292840192840161090f565b508195508c61013f8d011261093a57600080fd5b6109448d82610861565b94505050505092959891949750929550565b6020815260006109696020830184610796565b9392505050565b600181811c9082168061098457607f821691505b60208210810361067457634e487b7160e01b600052602260045260246000fd5b634e487b7160e01b600052601160045260246000fd5b818103818111156109cd576109cd6109a4565b92915050565b60208082526029908201527f5b416e6f6e41616468616172566f74655d3a20496e76616c69642070726f706f6040820152680e6c2d840d2dcc8caf60bb1b606082015260800190565b60006102008201905087825260208781840152866040840152856060840152608083018560005b6004811015610a6057815183529183019190830190600101610a43565b50505061010083018460005b6008811015610a8957815183529183019190830190600101610a6c565b50505050979650505050505050565b600060208284031215610aaa57600080fd5b8151801515811461096957600080fd5b634e487b7160e01b600052603260045260246000fd5b600060018201610ae257610ae26109a4565b5060010190565b808201808211156109cd576109cd6109a456fea2646970667358221220067aa2d6b27675117ce28046ce5c3ec402f217bdb63d42ad227f6996e01d596764736f6c63430008140033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "isLessThan3HoursAgo(uint256)": {
+        "details": "Check if the timestamp is more recent than (current time - 3 hours)",
+        "params": {
+          "timestamp": ": msg.sender address."
+        },
+        "returns": {
+          "_0": "bool"
+        }
+      },
+      "voteForProposal(uint256,uint256,uint256,uint256,uint256,uint256[4],uint256[8])": {
+        "details": "Register a vote in the contract.",
+        "params": {
+          "groth16Proof": ": SNARK Groth16 proof.",
+          "nullifier": ": Nullifier for the user's Aadhaar data.",
+          "nullifierSeed": ": Nullifier Seed used while generating the proof.",
+          "proposalIndex": ": Index of the proposal you want to vote for.",
+          "revealArray": ": Array of the values used as input for the proof generation (equal to [0, 0, 0, 0] if no field reveal were asked).",
+          "signal": ": signal used while generating the proof, should be equal to msg.sender.",
+          "timestamp": ": Timestamp of when the QR code was signed."
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 352,
+        "contract": "contracts/YourContract.sol:AnonAadhaarVote",
+        "label": "votingQuestion",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_string_storage"
+      },
+      {
+        "astId": 354,
+        "contract": "contracts/YourContract.sol:AnonAadhaarVote",
+        "label": "anonAadhaarVerifierAddr",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_address"
+      },
+      {
+        "astId": 358,
+        "contract": "contracts/YourContract.sol:AnonAadhaarVote",
+        "label": "proposals",
+        "offset": 0,
+        "slot": "2",
+        "type": "t_array(t_struct(Proposal)30_storage)dyn_storage"
+      },
+      {
+        "astId": 362,
+        "contract": "contracts/YourContract.sol:AnonAadhaarVote",
+        "label": "hasVoted",
+        "offset": 0,
+        "slot": "3",
+        "type": "t_mapping(t_uint256,t_bool)"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_array(t_struct(Proposal)30_storage)dyn_storage": {
+        "base": "t_struct(Proposal)30_storage",
+        "encoding": "dynamic_array",
+        "label": "struct IAnonAadhaarVote.Proposal[]",
+        "numberOfBytes": "32"
+      },
+      "t_bool": {
+        "encoding": "inplace",
+        "label": "bool",
+        "numberOfBytes": "1"
+      },
+      "t_mapping(t_uint256,t_bool)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => bool)",
+        "numberOfBytes": "32",
+        "value": "t_bool"
+      },
+      "t_string_storage": {
+        "encoding": "bytes",
+        "label": "string",
+        "numberOfBytes": "32"
+      },
+      "t_struct(Proposal)30_storage": {
+        "encoding": "inplace",
+        "label": "struct IAnonAadhaarVote.Proposal",
+        "members": [
+          {
+            "astId": 27,
+            "contract": "contracts/YourContract.sol:AnonAadhaarVote",
+            "label": "description",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_string_storage"
+          },
+          {
+            "astId": 29,
+            "contract": "contracts/YourContract.sol:AnonAadhaarVote",
+            "label": "voteCount",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256"
+          }
+        ],
+        "numberOfBytes": "64"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}
