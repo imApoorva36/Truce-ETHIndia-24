@@ -2,9 +2,13 @@ pragma solidity >=0.8.0 <0.9.0;
 
 import '@anon-aadhaar/contracts/interfaces/IAnonAadhaar.sol';
 import '@anon-aadhaar/contracts/interfaces/IAnonAadhaarVote.sol';
+import "../interfaces/IAnonDigiLockerGroth16Verifier.sol";
+import "../interfaces/IAnonDigiLocker.sol";
 
 contract Backend {
     address public anonAadhaarVerifierAddr;
+    address public verifier;
+    uint256 public immutable storedPublicKeyHash;
     struct User {
         string name;
         string vehicleRegistrationNumber;
@@ -21,6 +25,20 @@ contract Backend {
         uint256 fineAmount;
     }
 
+    struct CreateUserParams {
+        uint256 nullifierSeed1;
+        uint256 nullifier1;
+        uint256 timestamp;
+        uint256[4] revealArray;
+        uint256[8] groth16Proof1;
+        uint256 nullifier2;
+        uint256 nullifierSeed2;
+        uint256 documentType;
+        uint256 reveal;
+        uint256 signal;
+        uint256[8] groth16Proof2;
+    }
+
     mapping(address => User) public users;
     mapping(string => address) public vehicleToUser;
     mapping(address => Violation[]) userViolations;
@@ -31,9 +49,11 @@ contract Backend {
     event ViolationReported(address indexed user, string violationType, address reportedBy, uint256 fineAmount);
     event FinePaid(address indexed user, uint256 violationIndex, uint256 amount);
 
-    constructor(address _verifierAddr) {
+    constructor(address _verifierAddr, address _verifier, uint256 _pubkeyHash) {
+        verifier=_verifier;
         // Initialize some dummy fine amounts for violation types
         anonAadhaarVerifierAddr = _verifierAddr;
+        storedPublicKeyHash = _pubkeyHash;
         violationFines["Speeding"] = 200;
         violationFines["Parking"] = 50;
         violationFines["Red Light"] = 50;
@@ -43,15 +63,19 @@ contract Backend {
     function addressToUint256(address _addr) private pure returns (uint256) {
         return uint256(uint160(_addr));
     }
-    
-    // Create a new user
-    function createUser(string memory _name, string memory _vehicleRegistrationNumber, uint256 nullifierSeed,
-    uint256 nullifier,
-    uint256 timestamp,
-    uint256[4] memory revealArray,
-    uint256[8] memory groth16Proof) public payable {
-        require(users[msg.sender].walletAddress == address(0), "User already exists");
-        bool isValid = IAnonAadhaar(anonAadhaarVerifierAddr).verifyAnonAadhaarProof(
+
+    function _hash(uint256 message) private pure returns (uint256) {
+        return uint256(keccak256(abi.encodePacked(message))) >> 3;
+    }
+
+    function verifyAnonAadhaar(
+        uint256 nullifierSeed,
+        uint256 nullifier,
+        uint256 timestamp,
+        uint256[4] memory revealArray,
+        uint256[8] memory groth16Proof
+    ) internal returns (bool) {
+        return IAnonAadhaar(anonAadhaarVerifierAddr).verifyAnonAadhaarProof(
             nullifierSeed,
             nullifier,
             timestamp,
@@ -59,7 +83,52 @@ contract Backend {
             revealArray,
             groth16Proof
         );
+    }
+
+    function verifyDigiLocker(
+        uint256[8] memory proof,
+        uint256 nullifier,
+        uint256 documentType,
+        uint256 reveal,
+        uint256 nullifierSeed,
+        uint256 signal
+    ) internal view returns (bool) {
+        uint256 signalHash = _hash(signal);
+        return IAnonDigiLockerGroth16Verifier(verifier).verifyProof(
+            [proof[0], proof[1]],
+            [[proof[2], proof[3]], [proof[4], proof[5]]],
+            [proof[6], proof[7]],
+            [storedPublicKeyHash, nullifier, documentType, reveal, nullifierSeed, signalHash]
+        );
+    }
+    
+    // Create a new user
+    function createUser(
+        string memory _name,
+        string memory _vehicleRegistrationNumber,
+        CreateUserParams memory params
+    ) public payable {
+        require(users[msg.sender].walletAddress == address(0), "User already exists");
+        
+        bool isValid = verifyAnonAadhaar(
+            params.nullifierSeed1,
+            params.nullifier1,
+            params.timestamp,
+            params.revealArray,
+            params.groth16Proof1
+        );
         require(isValid, '[AnonAadhaarVote]: proof sent is not valid.');
+
+        bool isValid2 = verifyDigiLocker(
+            params.groth16Proof2,
+            params.nullifier2,
+            params.documentType,
+            params.reveal,
+            params.nullifierSeed2,
+            params.signal
+        );
+        require(isValid2, '[AnonAadhaarVote]: DL Proof sent is not valid.');
+
         users[msg.sender] = User({
             name: _name,
             vehicleRegistrationNumber: _vehicleRegistrationNumber,
