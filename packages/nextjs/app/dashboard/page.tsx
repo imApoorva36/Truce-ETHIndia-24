@@ -7,17 +7,19 @@ import { Address } from "viem";
 import { useAccount } from "wagmi";
 import { Balance } from "~~/components/scaffold-eth";
 import ViolationsTable from "~~/components/violations-table";
-import { useTargetNetwork } from "~~/hooks/scaffold-eth";
+import { useScaffoldReadContract, useTargetNetwork } from "~~/hooks/scaffold-eth";
 
 export default function HomeDashboard() {
-  const { address: connectedAddress } = useAccount();
-  const account = { address: connectedAddress };
+  const { address } = useAccount();
+  const account = { address };
+
   const { targetNetwork } = useTargetNetwork();
   const chain = targetNetwork;
   let router = useRouter()
   let [ user, setUser ] = useState<any>(false)
 
-  console.log(user)
+  let { data: rewardBalance } = useScaffoldReadContract({ contractName: "Backend", functionName: "getMyRewards" })
+  let { data: violations } = useScaffoldReadContract({ contractName: "Backend", functionName: "getUserViolations", args: [address]})
 
   useEffect(() => {
     if (!window.localStorage.getItem("user")) {
@@ -59,9 +61,9 @@ export default function HomeDashboard() {
           <div className="card-body">
             <h2 className="card-title">Rewards Earned</h2>
             <div className="flex items-center justify-center text-xl">
-              <span>100</span>
+              <span>{(rewardBalance || 0).toString()}</span>
             </div>
-            <span className="text-md text-center">Points</span>
+            <span className="text-md text-center">ETH</span>
           </div>
         </div>
       </div>
@@ -69,8 +71,9 @@ export default function HomeDashboard() {
       {/* Middle Section */}
       <div className="card bg-base-200 shadow-lg mb-6">
         <div className="card-body">
-          <h2 className="card-title">Recent Violations</h2>
-          <ViolationsTable />
+          <h2 className="card-title">All Violations</h2>
+          {/* @ts-ignore */}
+          {violations ? <ViolationsTable violations={violations} /> : null}
         </div>
       </div>
     </div>

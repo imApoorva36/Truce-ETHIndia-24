@@ -6,8 +6,9 @@ import { AnonAadhaarCore, deserialize, packGroth16Proof } from "@anon-aadhaar/co
 import { LaunchProveModal, useAnonAadhaar } from "@anon-aadhaar/react";
 import { Car, User, Wallet } from "lucide-react";
 import { useAccount } from "wagmi";
-import { useScaffoldWatchContractEvent, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
+import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 import { DLModal } from "./component/dl-modal";
+import AadharVerify from "~~/components/AadharVerify"
 
 const OnboardingForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -39,22 +40,6 @@ const OnboardingForm: React.FC = () => {
     // Open the Digilocker Modal
   };
 
-  useScaffoldWatchContractEvent({
-    contractName: "Backend",
-    eventName: "UserCreated",
-    // The onLogs function is called whenever a GreetingChange event is emitted by the contract.
-    // Parameters emitted by the event can be destructed using the below example
-    // for this example: event GreetingChange(address greetingSetter, string newGreeting, bool premium, uint256 value);
-    onLogs: logs => {
-      logs.map(log => {
-        const { userAddress, name, vehicleRegistrationNumber } = log.args;
-        if (userAddress == address) {
-          window.localStorage.setItem("user", JSON.stringify({ name, vehicleRegistrationNumber }));
-          router.push("/dashboard");
-        }
-      });
-    },
-  });
 
   const router = useRouter();
   const { writeContractAsync: contract } = useScaffoldWriteContract("Backend");
@@ -73,7 +58,6 @@ const OnboardingForm: React.FC = () => {
         formData.username,
         formData.vehicleRegistration,
         formData.vehicleType,
-        address,
         {
           nullifier1: BigInt(result.proof.nullifier),
           nullifierSeed1: BigInt(result.proof.nullifierSeed),
@@ -97,7 +81,13 @@ const OnboardingForm: React.FC = () => {
         },
       ],
     });
-    // router.push("/dashboard");
+
+    if (tx) {
+      router.push("/login");
+    }
+    else
+      alert("Error")
+
   };
 
   return (
@@ -105,27 +95,7 @@ const OnboardingForm: React.FC = () => {
       <div className="card w-96 bg-base-100 shadow-xl m-40">
         <div className="card-body">
           <h2 className="card-title text-center mb-4 text-primary">Vehicle Registration</h2>
-          <LaunchProveModal
-            nullifierSeed={Math.floor(Math.random() * 1983248)}
-            signal={connectedAddress}
-            buttonStyle={{
-              borderRadius: "8px",
-              border: "solid",
-              borderWidth: "1px",
-              boxShadow: "none",
-              fontWeight: 500,
-              borderColor: "#009A08",
-              color: "#009A08",
-              fontFamily: "rajdhani",
-              width: "100%",
-              textAlign: "center",
-              display: "flex",
-              justifyContent: "center",
-            }}
-            // buttonTitle={
-            //   isTestMode ? "USE TEST CREDENTIALS" : "USE REAL CREDENTIALS"
-            // }
-          />
+          <AadharVerify />
           <button className="btn btn-secondary mt-4 w-full" onClick={openModal}>
             Verify with Driving License
           </button>

@@ -110,7 +110,10 @@ export async function generateInput(xml: string, params: InputGenerationParams) 
   const paddedMessageBigInt = BigInt("0x" + paddedMessage.toString("hex"));
   const exponent = BigInt("0x" + Buffer.from(publicKeyJWK.e!, "base64").toString("hex")); // 65537
 
-  const rsaResult = paddedMessageBigInt === signatureBigInt ** exponent % pubKeyBigInt;
+  let res = BigInt(1)
+  for (let i=0 ; i<exponent ; i++) res = (res*signatureBigInt) % pubKeyBigInt
+
+  const rsaResult = paddedMessageBigInt === res;
   if (!rsaResult) {
     throw new Error("Local: RSA verification failed");
   }
