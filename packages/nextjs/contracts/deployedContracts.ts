@@ -248,7 +248,7 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
     Backend: {
-      address: "0xE0d56d7238F7C738f971FA09818EBCa2a57d862f",
+      address: "0x7D0c8a98C9788D025439c618Ce264CB5ad8c365e",
       abi: [
         {
           inputs: [
