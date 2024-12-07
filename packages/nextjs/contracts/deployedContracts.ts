@@ -248,7 +248,7 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
     Backend: {
-      address: "0x56fa932381d273B46D21dA571CED7Edf070dff1E",
+      address: "0xB76401dDfc10275515cD7a6e8FAF47C14BeAE834",
       abi: [
         {
           inputs: [
@@ -256,6 +256,16 @@ const deployedContracts = {
               internalType: "address",
               name: "_verifierAddr",
               type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_verifier",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "_pubkeyHash",
+              type: "uint256",
             },
           ],
           stateMutability: "nonpayable",
@@ -368,29 +378,66 @@ const deployedContracts = {
               type: "string",
             },
             {
-              internalType: "uint256",
-              name: "nullifierSeed",
-              type: "uint256",
-            },
-            {
-              internalType: "uint256",
-              name: "nullifier",
-              type: "uint256",
-            },
-            {
-              internalType: "uint256",
-              name: "timestamp",
-              type: "uint256",
-            },
-            {
-              internalType: "uint256[4]",
-              name: "revealArray",
-              type: "uint256[4]",
-            },
-            {
-              internalType: "uint256[8]",
-              name: "groth16Proof",
-              type: "uint256[8]",
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "nullifierSeed1",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "nullifier1",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "timestamp",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256[4]",
+                  name: "revealArray",
+                  type: "uint256[4]",
+                },
+                {
+                  internalType: "uint256[8]",
+                  name: "groth16Proof1",
+                  type: "uint256[8]",
+                },
+                {
+                  internalType: "uint256",
+                  name: "nullifier2",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "nullifierSeed2",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "documentType",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "reveal",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "signal",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256[8]",
+                  name: "groth16Proof2",
+                  type: "uint256[8]",
+                },
+              ],
+              internalType: "struct Backend.CreateUserParams",
+              name: "params",
+              type: "tuple",
             },
           ],
           name: "createUser",
@@ -540,6 +587,19 @@ const deployedContracts = {
           type: "function",
         },
         {
+          inputs: [],
+          name: "storedPublicKeyHash",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
           inputs: [
             {
               internalType: "address",
@@ -582,6 +642,19 @@ const deployedContracts = {
             },
           ],
           name: "vehicleToUser",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "verifier",
           outputs: [
             {
               internalType: "address",
