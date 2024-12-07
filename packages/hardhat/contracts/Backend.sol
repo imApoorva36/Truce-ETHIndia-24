@@ -275,9 +275,56 @@ contract Backend {
 
     function getUserDetailsByAddress(
         address _walletAddress
-    ) public view returns (string memory basename, string memory vehicleNumber) {
+    ) public view returns (
+        string memory basename,
+        string memory vehicleNumber,
+        string memory vehicleType,
+        uint256 pendingFines,
+        uint256 rewardBalance,
+        uint256 points
+    ) {
         require(users[_walletAddress].walletAddress != address(0), "User does not exist");
-        return (users[_walletAddress].basename, users[_walletAddress].vehicleRegistrationNumber);
+        User memory user = users[_walletAddress];
+        return (
+            user.basename,
+            user.vehicleRegistrationNumber,
+            user.vehicleType,
+            user.pendingFines,
+            user.rewardBalance,
+            user.points
+        );
+    }
+
+    function getUserDetailsByBasename(
+        string memory _basename
+    ) public view returns (
+        string memory basename,
+        string memory vehicleNumber,
+        string memory vehicleType,
+        address walletAddress,
+        uint256 pendingFines,
+        uint256 rewardBalance,
+        uint256 points
+    ) {
+        address userAddress;
+        for (uint i = 0; i < allUsers.length; i++) {
+            if (keccak256(bytes(users[allUsers[i]].basename)) == keccak256(bytes(_basename))) {
+                userAddress = allUsers[i];
+                break;
+            }
+        }
+        require(userAddress != address(0), "User not found");
+        
+        User memory user = users[userAddress];
+        return (
+            user.basename,
+            user.vehicleRegistrationNumber,
+            user.vehicleType,
+            user.walletAddress,
+            user.pendingFines,
+            user.rewardBalance,
+            user.points
+        );
     }
 
     function getAllUsersAndPoints()
@@ -299,5 +346,10 @@ contract Backend {
         }
 
         return (basenames, points); // changed return variable name
+    }
+
+    function getUserPoints(address _userAddress) public view returns (uint256) {
+        require(users[_userAddress].walletAddress != address(0), "User does not exist");
+        return users[_userAddress].points;
     }
 }

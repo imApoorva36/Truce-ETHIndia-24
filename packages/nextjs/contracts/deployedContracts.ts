@@ -248,7 +248,7 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
     Backend: {
-      address: "0x7D0c8a98C9788D025439c618Ce264CB5ad8c365e",
+      address: "0x2065701c05095B69b412B240FA1CDF6DD66a0328",
       abi: [
         {
           inputs: [
@@ -547,6 +547,94 @@ const deployedContracts = {
               internalType: "string",
               name: "vehicleNumber",
               type: "string",
+            },
+            {
+              internalType: "string",
+              name: "vehicleType",
+              type: "string",
+            },
+            {
+              internalType: "uint256",
+              name: "pendingFines",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "rewardBalance",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "points",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "_basename",
+              type: "string",
+            },
+          ],
+          name: "getUserDetailsByBasename",
+          outputs: [
+            {
+              internalType: "string",
+              name: "basename",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "vehicleNumber",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "vehicleType",
+              type: "string",
+            },
+            {
+              internalType: "address",
+              name: "walletAddress",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "pendingFines",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "rewardBalance",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "points",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_userAddress",
+              type: "address",
+            },
+          ],
+          name: "getUserPoints",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
             },
           ],
           stateMutability: "view",
