@@ -100,14 +100,14 @@ const OnboardingForm: React.FC = () => {
             Verify with Driving License
           </button>
           {showModal && (
-            <div className="modal-overlay">
-              <div className="modal-content">
+            <dialog className="modal modal-open">
+              <div className="modal-content bg-slate-50 p-2 rounded-lg">
                 <button onClick={closeModal} className="close-button">
                   &times;
                 </button>
                 <DLModal />
               </div>
-            </div>
+            </dialog>
           )}
           <form onSubmit={handleSubmit}>
             <div className="form-control mb-2">

@@ -36,13 +36,7 @@ interface Violation {
 const ViolationsTable: React.FC<{violations: readonly Violation[]}> = ({ violations }) => {
   // Mock data with more meaningful violation types
 
-  const handleClick = (violation: Violation) => () => {
-    console.log("Clicked violation:", violation);
-    const modal = document.getElementById("my_modal_2");
-    const fineElement = modal?.querySelector(".modal-fine");
-    if (fineElement) fineElement.textContent = `${violation.fineAmount}`;
-    if (modal) (modal as HTMLDialogElement).showModal();
-  };
+  const [openModal, setOpenModal] = React.useState(-1);
 
   return (
     <div className="container mx-auto p-2">
@@ -91,7 +85,7 @@ const ViolationsTable: React.FC<{violations: readonly Violation[]}> = ({ violati
 
                   {/* Actions Column */}
                   <th>
-                    <button className="btn btn-outline text-secondary" onClick={handleClick(violation)}>
+                    <button className="btn btn-outline text-secondary" onClick={() => setOpenModal(violation.id)}>
                       open modal
                     </button>
                   </th>
@@ -101,24 +95,29 @@ const ViolationsTable: React.FC<{violations: readonly Violation[]}> = ({ violati
           </tbody>
         </table>
       </div>
-      <dialog id="my_modal_2" className="modal">
-        <div className="modal-box">
-          <div className="modal-header">
-            <h3>Violation</h3>
+      {openModal && openModal > 0 && (
+        <dialog className="modal modal-open">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">Violation Details</h3>
+            <div className="py-4">
+              <div className="mt-4 text-center">
+                <div className="stat">
+                  <div className="stat-title">Fine Amount</div>
+                  <div className="stat-value text-primary">{violations[openModal].fine}</div>
+                </div>
+              </div>
+            </div>
+            <div className="modal-action">
+              <button className="btn btn-primary" onClick={() => setOpenModal(-1)}>
+                Pay Fine
+              </button>
+              <button className="btn btn-ghost" onClick={() => setOpenModal(-1)}>
+                Close
+              </button>
+            </div>
           </div>
-          <div className="modal-body ">
-            <p>
-              Fine
-              <span className="modal-fine mx-1"></span>
-            </p>
-            <button className="btn btn-primary mx-1">Pay Fine</button>
-            <button className="btn btn-secondary">Appeal</button>
-          </div>
-        </div>
-        <form method="dialog" className="modal-backdrop">
-          <button>close</button>
-        </form>
-      </dialog>
+        </dialog>
+      )}
     </div>
   );
 };
