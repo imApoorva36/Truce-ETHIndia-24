@@ -28,6 +28,13 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     autoMine: true,
   });
 
+  await deploy("AnonAadhaarVote", {
+    from: deployer,
+    args: ["Voting Question", ["Proposal 1", "Proposal 2"], '0xC4C4d6c21F1D8e4591a69f7662b6EcE0f2f0E61b'], // Replace with actual arguments
+    log: true,
+    autoMine: true,
+  });
+
   // No need to interact with the contract after deployment as there is no greeting function
 };
 
@@ -35,4 +42,4 @@ export default deployYourContract;
 
 // Tags are useful if you have multiple deploy files and only want to run one of them.
 // e.g. yarn deploy --tags YourContract
-deployYourContract.tags = ["YourContract"];
+deployYourContract.tags = ["YourContract", "AnonAadhaarVote"];

@@ -35,11 +35,17 @@
     "verify": "yarn workspace @se-2/hardhat verify"
   },
   "devDependencies": {
+    "@types/snarkjs": "^0",
     "husky": "~8.0.3",
     "lint-staged": "~13.2.2"
   },
   "packageManager": "yarn@3.2.3",
   "engines": {
     "node": ">=18.18.0"
+  },
+  "dependencies": {
+    "@anon-aadhaar/contracts": "^2.4.2",
+    "react-simple-code-editor": "^0.14.1",
+    "snarkjs": "^0.7.5"
   }
 }
