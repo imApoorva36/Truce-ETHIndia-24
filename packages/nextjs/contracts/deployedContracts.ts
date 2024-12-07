@@ -248,7 +248,7 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
     Backend: {
-      address: "0x2065701c05095B69b412B240FA1CDF6DD66a0328",
+      address: "0x49ff6773611575eF4c42F5B5696e4291B161DD1c",
       abi: [
         {
           inputs: [
@@ -497,6 +497,61 @@ const deployedContracts = {
               internalType: "uint256[]",
               name: "points",
               type: "uint256[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getAllUsersAndViolations",
+          outputs: [
+            {
+              internalType: "address[]",
+              name: "userAddresses",
+              type: "address[]",
+            },
+            {
+              internalType: "string[]",
+              name: "basenames",
+              type: "string[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "time",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "violationType",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "area",
+                  type: "string",
+                },
+                {
+                  internalType: "address",
+                  name: "reportedBy",
+                  type: "address",
+                },
+                {
+                  internalType: "bool",
+                  name: "isPaid",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint256",
+                  name: "fineAmount",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct Backend.Violation[][]",
+              name: "violations",
+              type: "tuple[][]",
             },
           ],
           stateMutability: "view",

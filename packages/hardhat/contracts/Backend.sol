@@ -352,4 +352,37 @@ contract Backend {
         require(users[_userAddress].walletAddress != address(0), "User does not exist");
         return users[_userAddress].points;
     }
+
+    struct UserViolationInfo {
+        address userAddress;
+        string basename;
+        Violation[] violations;
+    }
+
+    function getAllUsersAndViolations() public view returns (UserViolationInfo[] memory) {
+        uint256 totalUsers = allUsers.length;
+        UserViolationInfo[] memory allUserInfo = new UserViolationInfo[](totalUsers);
+
+        for (uint256 i = 0; i < totalUsers; i++) {
+            address userAddr = allUsers[i];
+            allUserInfo[i] = UserViolationInfo({
+                userAddress: userAddr,
+                basename: users[userAddr].basename,
+                violations: userViolations[userAddr]
+            });
+        }
+
+        return allUserInfo;
+    }
+
+    // Add this new function for daily points update
+    function updateDailyPoints() public {
+        uint256 totalUsers = allUsers.length;
+        for (uint256 i = 0; i < totalUsers; i++) {
+            address userAddr = allUsers[i];
+            if (users[userAddr].pendingFines == 0) {
+                users[userAddr].points += 10;
+            }
+        }
+    }
 }
