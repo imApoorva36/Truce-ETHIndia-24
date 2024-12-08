@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import { ArrowUpRight, CreditCard, Gift, Star, Trophy, Wallet, Zap } from "lucide-react";
+import { useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth"
+import { useAccount } from "wagmi"
 
 const RewardsPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState("rewards");
@@ -13,44 +15,69 @@ const RewardsPage: React.FC = () => {
     pointsToNextTier: 0,
   });
 
+  let { address } = useAccount()
+  let { writeContractAsync: contract } = useScaffoldWriteContract("Backend")
+
+  let { data: userPoints } = useScaffoldReadContract({ contractName: "Backend", functionName: "getUserPoints", args: [address] })
+
+  let points = userPoints===undefined ? undefined : parseInt(userPoints.toString())
+
   useEffect(() => {
+    if (points === undefined) return
     // Fetch user stats and rewards
     const fetchUserStats = async () => {
-      const userPoints = 1750; // Mock points
       const calculateTier = (points: number) => {
-        if (points >= 2000) return "Tier 8";
+        if (points >= 1750) return "Tier 8";
         if (points >= 1500) return "Tier 7";
-        if (points >= 1000) return "Tier 6";
-        if (points >= 750) return "Tier 5";
-        if (points >= 500) return "Tier 4";
-        if (points >= 250) return "Tier 3";
-        if (points >= 100) return "Tier 2";
+        if (points >= 1250) return "Tier 6";
+        if (points >= 1000) return "Tier 5";
+        if (points >= 750) return "Tier 4";
+        if (points >= 500) return "Tier 3";
+        if (points >= 250) return "Tier 2";
         return "Tier 1";
       };
 
-      const nextTierPoints = userPoints >= 2000 ? 0 : Math.ceil((userPoints + 250) / 250) * 250;
-      const pointsToNextTier = Math.max(0, nextTierPoints - userPoints);
+      const nextTierPoints = points >= 2000 ? 0 : Math.ceil(points / 250) * 250;
+      const pointsToNextTier = Math.max(0, nextTierPoints - points);
 
       setUserStats({
-        totalPoints: userPoints,
-        currentTier: calculateTier(userPoints),
+        totalPoints: points,
+        currentTier: calculateTier(points),
         nextTierPoints,
         pointsToNextTier,
       });
     };
 
     fetchUserStats();
-  }, []);
+  }, [userPoints]);
+
+
+
+  async function handleConvert () {
+    try {
+      let tx = await contract({
+      functionName: "convertPointsToRewards",
+      })
+
+      if (tx) {
+        setSelectedCoupon(null)
+      }
+    }
+    catch {
+      alert("An error occured")
+    }
+  }
+
 
   const rewardTiers = [
     { name: "Tier 1", points: 0, color: "badge-primary" },
-    { name: "Tier 2", points: 100, color: "badge-primary" },
-    { name: "Tier 3", points: 250, color: "badge-primary" },
-    { name: "Tier 4", points: 500, color: "badge-primary" },
-    { name: "Tier 5", points: 750, color: "badge-primary" },
-    { name: "Tier 6", points: 1000, color: "badge-primary" },
+    { name: "Tier 2", points: 250, color: "badge-primary" },
+    { name: "Tier 3", points: 500, color: "badge-primary" },
+    { name: "Tier 4", points: 750, color: "badge-primary" },
+    { name: "Tier 5", points: 1000, color: "badge-primary" },
+    { name: "Tier 6", points: 1250, color: "badge-primary" },
     { name: "Tier 7", points: 1500, color: "badge-primary" },
-    { name: "Tier 8", points: 2000, color: "badge-primary" },
+    { name: "Tier 8", points: 1750, color: "badge-primary" },
   ];
 
   const coupons = [
@@ -72,7 +99,7 @@ const RewardsPage: React.FC = () => {
       id: "coup3",
       title: "ETH Conversion",
       description: "Convert points to Ethereum",
-      points: 1000,
+      points: 0,
       icon: <Wallet className="w-8 h-8 text-green-500" />,
     },
   ];
@@ -137,13 +164,6 @@ const RewardsPage: React.FC = () => {
           >
             Available Rewards
           </a>
-          <a
-            role="tab"
-            className={`tab ${activeTab === "claimed" ? "tab-active" : ""}`}
-            onClick={() => setActiveTab("claimed")}
-          >
-            Claimed Rewards
-          </a>
         </div>
 
         {/* Rewards Grid */}
@@ -153,7 +173,7 @@ const RewardsPage: React.FC = () => {
               <div className="card-body">
                 <div className="flex justify-between items-center">
                   {coupon.icon}
-                  <div className="badge badge-primary">{coupon.points} pts</div>
+                  {coupon.points > 0 && <div className="badge badge-primary">{coupon.points} pts</div>}
                 </div>
                 <h2 className="card-title">{coupon.title}</h2>
                 <p className="text-sm">{coupon.description}</p>
@@ -173,25 +193,15 @@ const RewardsPage: React.FC = () => {
             <div className="modal-box">
               <h3 className="font-bold text-lg">Convert Points to ETH</h3>
               <div className="py-4">
-                <div className="flex justify-between items-center mb-4">
-                  <span>Available Points:</span>
-                  <span className="font-bold">{userStats.totalPoints}</span>
-                </div>
                 <div className="form-control">
                   <label className="label">
                     <span className="label-text">Points to Convert</span>
                   </label>
-                  <input type="number" placeholder="Enter points" className="input input-bordered w-full" />
-                </div>
-                <div className="mt-4 text-center">
-                  <div className="stat">
-                    <div className="stat-title">Estimated ETH</div>
-                    <div className="stat-value text-primary">0.025</div>
-                  </div>
+                  <input type="number" placeholder="Enter points" className="input input-bordered w-full disabled:bg-slate-100 disabled:text-slate-500"  value={userStats.totalPoints} disabled={true} />
                 </div>
               </div>
               <div className="modal-action">
-                <button className="btn btn-primary" onClick={() => setSelectedCoupon(null)}>
+                <button className="btn btn-primary" onClick={handleConvert}>
                   Convert
                 </button>
                 <button className="btn btn-ghost" onClick={() => setSelectedCoupon(null)}>

@@ -18,9 +18,12 @@ export default function HomeDashboard() {
   let router = useRouter()
   let [ user, setUser ] = useState<any>(false)
 
-  let { data: rewardBalance } = useScaffoldReadContract({ contractName: "Backend", functionName: "getMyRewards" })
+  let { data: userData } = useScaffoldReadContract({ contractName: "Backend", functionName: "getUserDetailsByAddress", args: [address] })
   let { data: violations } = useScaffoldReadContract({ contractName: "Backend", functionName: "getUserViolations", args: [address]})
 
+  let rewardBalance = userData ? userData[4] : 0;
+
+  console.log(violations)
   useEffect(() => {
     if (!window.localStorage.getItem("user")) {
       router.push("/register")
@@ -63,7 +66,7 @@ export default function HomeDashboard() {
             <div className="flex items-center justify-center text-xl">
               <span>{(rewardBalance || 0).toString()}</span>
             </div>
-            <span className="text-md text-center">ETH</span>
+            <span className="text-md text-center">Wei</span>
           </div>
         </div>
       </div>

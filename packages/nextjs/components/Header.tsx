@@ -54,7 +54,7 @@ export const HeaderMenuLinks = () => {
               passHref
               className={`${
                 isActive ? "bg-primary text-primary-content shadow-md" : ""
-              } hover:bg-secondary hover:text-white hover:shadow-md focus:!bg-secondary active:!text-primary-content py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
+              } hover:bg-secondary hover:text-white hover:shadow-md py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
             >
               {icon}
               <span>{label}</span>
