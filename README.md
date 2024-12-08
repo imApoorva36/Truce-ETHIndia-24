@@ -1,80 +1,216 @@
-# 🏗 Scaffold-ETH 2
+# **Rule Zer0**
 
-<h4 align="center">
-  <a href="https://docs.scaffoldeth.io">Documentation</a> |
-  <a href="https://scaffoldeth.io">Website</a>
-</h4>
+### _Incentivizing Safer Roads Through Web3 and AI_
 
-🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on the Ethereum blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
+---
 
-⚙️ Built using NextJS, RainbowKit, Hardhat, Wagmi, Viem, and Typescript.
+## 📝 **Overview**
 
-- ✅ **Contract Hot Reload**: Your frontend auto-adapts to your smart contract as you edit it.
-- 🪝 **[Custom hooks](https://docs.scaffoldeth.io/hooks/)**: Collection of React hooks wrapper around [wagmi](https://wagmi.sh/) to simplify interactions with smart contracts with typescript autocompletion.
-- 🧱 [**Components**](https://docs.scaffoldeth.io/components/): Collection of common web3 components to quickly build your frontend.
-- 🔥 **Burner Wallet & Local Faucet**: Quickly test your application with a burner wallet and local faucet.
-- 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with the Ethereum network.
+**Rule Zer0** is a decentralized platform designed to revolutionize traffic rule enforcement by creating a **self-sustaining rewards and fines ecosystem**. By combining blockchain, AI, and Web3 technologies, Rule Zer0 encourages drivers to follow traffic rules and penalizes those who don't, fostering safer roads and responsible driving.
 
-![Debug Contracts tab](https://github.com/scaffold-eth/scaffold-eth-2/assets/55535804/b237af0c-5027-4849-a5c1-2e31495cccb1)
+---
 
-## Requirements
+## 🔗 **Core Components**
 
-Before you begin, you need to install the following tools:
+### 🔗 **Smart Contract**
 
-- [Node (>= v18.18)](https://nodejs.org/en/download/)
-- Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
-- [Git](https://git-scm.com/downloads)
+- Deployed on **Base Sepolia** testnet at contract address:  
+  `0x...`
+- Supports:
+  - User management via **Anon Aadhaar** (sign-in with Aadhaar Card or Driver's License).
+  - Storing violations, rewards, and payment statuses.
+  - Automated reward distribution.
+  - Fine payments and reward redemption.
 
-## Quickstart
+### 🐍 **Python Automation Script**
 
-To get started with Scaffold-ETH 2, follow the steps below:
+- Automates the AI agent’s processes:
+  - Fetches data from the smart contract.
+  - Analyzes user violations.
+  - Updates the contract with reward points based on the reward distribution logic.
 
-1. Install dependencies if it was skipped in CLI:
+### 🧠 **Galadriel AI Agent**
 
-```
-cd my-dapp-example
-yarn install
-```
+- **Galadriel** is an AI agent that analyzes data from the smart contract, including violations and user behavior.
+- The agent generates:
+  - Responses based on driving patterns.
+  - Reward amounts personalized to each driver.
+  - Updates to user points in the smart contract based on predefined reward distribution rules.
 
-2. Run a local network in the first terminal:
+### 💻 **Frontend**
 
-```
-yarn chain
-```
+- The frontend is built using **Scaffold-ETH**.
+- Provides end-to-end support for:
+  - Viewing traffic violations.
+  - Paying fines using:
+    - **Coinbase Wallet** for UPI-to-crypto transactions.
+    - An on-platform wallet.
+  - Checking rewards and exchanging them for alternatives.
+  - Viewing the **leaderboard** based on driver points.
+  - Searching for user profiles.
 
-This command starts a local Ethereum network using Hardhat. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `packages/hardhat/hardhat.config.ts`.
+---
 
-3. On a second terminal, deploy the test contract:
+## **How Rule Zer0 Works**
 
-```
-yarn deploy
-```
+1. **User Registration**  
+   Users sign in using **Anon Aadhaar** (via Aadhaar Card or Driver's License).
 
-This command deploys a test smart contract to the local network. The contract is located in `packages/hardhat/contracts` and can be modified to suit your needs. The `yarn deploy` command uses the deploy script located in `packages/hardhat/deploy` to deploy the contract to the network. You can also customize the deploy script.
+2. **Violations & Penalties**  
+   When a traffic rule is violated, the violation is reported and logged in the smart contract.
 
-4. On a third terminal, start your NextJS app:
+3. **Reward System**  
+   The AI agent (Galadriel) evaluates user behavior and determines rewards based on the following rules:
 
-```
-yarn start
-```
+   - **Less Violations Recently** ➡️ Slightly More Rewards.
+   - **Improved Frequent Defaulters** ➡️ Bonus Rewards.
+   - **Consistent Good Drivers** ➡️ Average Rewards.
+   - **Frequent Violators** ➡️ No Rewards.
+   - **Increased Violation Frequency** ➡️ Low Rewards.
+   - **Unpaid Fines** ➡️ Rewards Capped at 8%.
 
-Visit your app on: `http://localhost:3000`. You can interact with your smart contract using the `Debug Contracts` page. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
+4. **Payment of Fines**  
+   Fines can be paid using:
 
-Run smart contract test with `yarn hardhat:test`
+   - **Coinbase Wallet** (UPI-to-crypto).
+   - **On-platform wallet** for direct payments.
 
-- Edit your smart contracts in `packages/hardhat/contracts`
-- Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
-- Edit your deployment scripts in `packages/hardhat/deploy`
+5. **Reward Redemption**  
+   Users can view and redeem their rewards for:
+   - Alternative incentives (e.g., coupons, discounts).
+   - Clearing fines with reward points.
 
+---
 
-## Documentation
+## 📊 **Features**
 
-Visit our [docs](https://docs.scaffoldeth.io) to learn how to start building with Scaffold-ETH 2.
+1. **🪪 Anon Aadhaar Sign-In**
 
-To know more about its features, check out our [website](https://scaffoldeth.io).
+   - Secure, decentralized login using Aadhaar Card or Driver's License.
 
-## Contributing to Scaffold-ETH 2
+2. **🚦 Violation Tracking**
 
-We welcome contributions to Scaffold-ETH 2!
+   - Real-time logging and display of traffic violations.
 
-Please see [CONTRIBUTING.MD](https://github.com/scaffold-eth/scaffold-eth-2/blob/main/CONTRIBUTING.md) for more information and guidelines for contributing to Scaffold-ETH 2.
+3. **💰 Fine Payments**
+
+   - Pay fines seamlessly with crypto or UPI via Coinbase Wallet.
+
+4. **🏆 Rewards System**
+
+   - Earn rewards for responsible driving.
+   - Exchange points for incentives or use them to clear fines.
+
+5. **📈 Leaderboard**
+
+   - Compete with other drivers and track your performance.
+
+6. **🔍 Profile Search**
+   - Search and view driver profiles and violation history.
+
+---
+
+## 🛠️ **Technologies Used**
+
+- **Frontend**: Scaffold-ETH, React.js
+- **Backend**: Hardhat (Smart Contract Development)
+- **Blockchain**: Solidity, Base Sepolia Testnet
+- **AI**: Python-based automation with Galadriel AI agent
+- **Wallet Integration**: Coinbase Wallet, UPI-to-crypto payments
+- **Identity Verification**: Anon Aadhaar
+
+---
+
+## 🚀 **Getting Started**
+
+### Prerequisites
+
+1. **Node.js** (v14+)
+2. **Hardhat**
+   ```bash
+   npm install --save-dev hardhat
+   ```
+3. **Python** (for AI automation script)
+4. **Coinbase Wallet** for transactions.
+
+### Smart Contract Deployment
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/imApoorva36/Truce-ETHIndia-24.git
+   cd Truce-ETHIndia-24
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Deploy the contract to **Base Sepolia**:
+   ```bash
+   npx hardhat run scripts/deploy.js --network baseSepolia
+   ```
+
+### Frontend Setup
+
+1. Start the frontend:
+
+   ```bash
+   npm start
+   ```
+
+2. Open the app in your browser:
+   ```
+   http://localhost:3000
+   ```
+
+### Python Script (AI Automation)
+
+1. Install Python dependencies:
+
+   ```bash
+   pip install web3 requests
+   ```
+
+2. Run the AI automation script:
+   ```bash
+   python ai_agent.py
+   ```
+
+---
+
+## 📜 **Reward Distribution Logic**
+
+The rewards are distributed based on these principles:
+
+1. **Recent Improvement**:  
+   More rewards for drivers showing improvement.
+2. **Consistent Violators**:  
+   Zero rewards for continuous defaulters.
+3. **Good Drivers**:  
+   Average rewards for consistently good drivers.
+4. **Unpaid Fines**:  
+   Rewards capped at 8% if fines are unpaid.
+
+---
+
+## 🤝 **Contributing**
+
+1. Fork the repository.
+2. Create a new branch:
+   ```bash
+   git checkout -b feature-branch
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m "Add new feature"
+   ```
+4. Push and create a pull request.
+
+---
+
+## 🔒 **License**
+
+This project is licensed under the **MIT License**.
