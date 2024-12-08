@@ -12,12 +12,12 @@
 
 ## 🔗 **Core Components**
 
-The frontend is built using <a href="https://scaffoldeth.io"**Scaffold-ETH**</a>.
+The frontend is built using [Scaffold-ETH 2](https://scaffoldeth.io/).
 
 ### 🔗 **Smart Contract**
 
 - Deployed on **Base Sepolia** testnet at contract address:  
-  `0x...`
+  `0x5FbDB2315678afecb367f032d93F642f64180aa3`
 - Supports:
   - User management via **Anon Aadhaar** (sign-in with Aadhaar Card or Driver's License).
   - Storing violations, rewards, and payment statuses.
@@ -26,17 +26,16 @@ The frontend is built using <a href="https://scaffoldeth.io"**Scaffold-ETH**</a>
 
 ### 🐍 **Python Automation Script**
 
-- Automates the AI agent’s processes:
-  - Fetches data from the smart contract.
-  - Analyzes user violations.
-  - Updates the contract with reward points based on the reward distribution logic.
+- Automates Vehicle Traffic Violation Reporting:
+  - Uses object detection to trace vehicles on a camera feed
+  - Reports traffic violations to the smart contract
 
 ### 🧠 **Galadriel AI Agent**
 
 - **Galadriel** is an AI agent that analyzes data from the smart contract, including violations and user behavior.
 - The agent generates:
-  - Responses based on driving patterns.
-  - Reward amounts personalized to each driver.
+  - Responses based on violation patterns of each driver.
+  - Reward amounts specific to each driver.
   - Updates to user points in the smart contract based on predefined reward distribution rules.
 
 ### 💻 **Frontend**
@@ -45,8 +44,8 @@ The frontend is built using <a href="https://scaffoldeth.io"**Scaffold-ETH**</a>
   - Viewing traffic violations.
   - Paying fines using:
     - **Coinbase Wallet** for UPI-to-crypto transactions.
-    - An on-platform wallet.
-  - Checking rewards and exchanging them for alternatives.
+    - Any other on-chain wallet.
+  - Checking points and exchanging them for rewards.
   - Viewing the **leaderboard** based on driver points.
   - Searching for user profiles.
 
@@ -78,6 +77,7 @@ The frontend is built using <a href="https://scaffoldeth.io"**Scaffold-ETH**</a>
 
 5. **Reward Redemption**  
    Users can view and redeem their rewards for:
+   - Blockchain currency.
    - Alternative incentives (e.g., coupons, discounts).
    - Clearing fines with reward points.
 
@@ -113,12 +113,12 @@ The frontend is built using <a href="https://scaffoldeth.io"**Scaffold-ETH**</a>
 
 ## 🛠️ **Technologies Used**
 
-- **Frontend**: Next.js, DaisyUI, TailwindCSS
+- **Frontend**: Scaffold-ETH 2 with NextJS and RainbowKit UI
 - **Backend**: Hardhat (Smart Contract Development)
 - **Blockchain**: Solidity, Base Sepolia Testnet
-- **AI**: Python-based automation with Galadriel AI agent
-- **Wallet Integration**: Rainbox Kit, Metamask, Coinbase Wallet, Ledger, Brave Wallet
-- **Identity Verification**: Anon Aadhaar
+- **AI**: Python-based automation with Galadriel AI agent and OpenCV/Ultralytics
+- **Wallet Integration**: Metamask, Coinbase Wallet
+- **Identity Verification**: Anon Aadhaar for Aadhaar and Driving Licence Verification
 
 ---
 
@@ -172,12 +172,12 @@ The frontend is built using <a href="https://scaffoldeth.io"**Scaffold-ETH**</a>
 1. Install Python dependencies:
 
    ```bash
-   pip install web3 requests
+   pip install web3 opencv-python ultralytics openai
    ```
 
 2. Run the AI automation script:
    ```bash
-   python ai_agent.py
+   python yolotrack1.py
    ```
 
 ---
@@ -193,22 +193,11 @@ The rewards are distributed based on these principles:
 3. **Good Drivers**:  
    Average rewards for consistently good drivers.
 4. **Unpaid Fines**:  
-   Rewards capped at 8% if fines are unpaid.
+   Rewards capped if fines are unpaid.
 
----
-
-## 🤝 **Contributing**
-
-1. Fork the repository.
-2. Create a new branch:
    ```bash
-   git checkout -b feature-branch
+   python caller.py
    ```
-3. Commit your changes:
-   ```bash
-   git commit -m "Add new feature"
-   ```
-4. Push and create a pull request.
 
 ---
 
