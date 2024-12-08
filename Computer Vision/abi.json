@@ -1,0 +1,758 @@
+[
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_verifierAddr",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_verifier",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_pubkeyHash",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "violationIndex",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "FinePaid",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "newRewardBalance",
+          "type": "uint256"
+        }
+      ],
+      "name": "RewardUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "userAddress",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "vehicleRegistrationNumber",
+          "type": "string"
+        }
+      ],
+      "name": "UserCreated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "violationType",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "reportedBy",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "fineAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "ViolationReported",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "addDailyPoints",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_basename",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_points",
+          "type": "uint256"
+        }
+      ],
+      "name": "addPoints",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_user",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_newReward",
+          "type": "uint256"
+        }
+      ],
+      "name": "addUserReward",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "allUsers",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "anonAadhaarVerifierAddr",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "convertPointsToRewards",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_basename",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_vehicleRegistrationNumber",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_vehicleType",
+          "type": "string"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "nullifierSeed1",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "nullifier1",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "timestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256[4]",
+              "name": "revealArray",
+              "type": "uint256[4]"
+            },
+            {
+              "internalType": "uint256[8]",
+              "name": "groth16Proof1",
+              "type": "uint256[8]"
+            }
+          ],
+          "internalType": "struct Backend.CreateUserParams",
+          "name": "params",
+          "type": "tuple"
+        }
+      ],
+      "name": "createUser",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "finesPaid",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getAllUsersAndPoints",
+      "outputs": [
+        {
+          "internalType": "string[]",
+          "name": "basenames",
+          "type": "string[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "points",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getAllUsersAndViolations",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "userAddress",
+              "type": "address"
+            },
+            {
+              "internalType": "string",
+              "name": "basename",
+              "type": "string"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "time",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "string",
+                  "name": "violationType",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "area",
+                  "type": "string"
+                },
+                {
+                  "internalType": "address",
+                  "name": "reportedBy",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "isPaid",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "fineAmount",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct Backend.Violation[]",
+              "name": "violations",
+              "type": "tuple[]"
+            }
+          ],
+          "internalType": "struct Backend.UserViolationInfo[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getContractBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getMyRewards",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_walletAddress",
+          "type": "address"
+        }
+      ],
+      "name": "getUserDetailsByAddress",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "basename",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "vehicleNumber",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "vehicleType",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "pendingFines",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "rewardBalance",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "points",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_basename",
+          "type": "string"
+        }
+      ],
+      "name": "getUserDetailsByBasename",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "basename",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "vehicleNumber",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "vehicleType",
+          "type": "string"
+        },
+        {
+          "internalType": "address",
+          "name": "walletAddress",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "pendingFines",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "rewardBalance",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "points",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_userAddress",
+          "type": "address"
+        }
+      ],
+      "name": "getUserPoints",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_user",
+          "type": "address"
+        }
+      ],
+      "name": "getUserViolations",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "time",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "violationType",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "area",
+              "type": "string"
+            },
+            {
+              "internalType": "address",
+              "name": "reportedBy",
+              "type": "address"
+            },
+            {
+              "internalType": "bool",
+              "name": "isPaid",
+              "type": "bool"
+            },
+            {
+              "internalType": "uint256",
+              "name": "fineAmount",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Backend.Violation[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_user",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_violationIndex",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "nullifierSeed",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "nullifier",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256[4]",
+          "name": "revealArray",
+          "type": "uint256[4]"
+        },
+        {
+          "internalType": "uint256[8]",
+          "name": "groth16Proof",
+          "type": "uint256[8]"
+        }
+      ],
+      "name": "payFine",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_user",
+          "type": "address"
+        },
+        {
+          "internalType": "string",
+          "name": "_violationType",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_timestamp",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "_area",
+          "type": "string"
+        }
+      ],
+      "name": "reportViolation",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "storedPublicKeyHash",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "totalRewardPool",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "totalpoints",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "users",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "basename",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "vehicleRegistrationNumber",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "vehicleType",
+          "type": "string"
+        },
+        {
+          "internalType": "address",
+          "name": "walletAddress",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "pendingFines",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "rewardBalance",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "points",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "name": "vehicleToUser",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "verifier",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "name": "violationFines",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ]
