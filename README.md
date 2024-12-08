@@ -12,6 +12,8 @@
 
 ## 🔗 **Core Components**
 
+The frontend is built using <a href="https://scaffoldeth.io"**Scaffold-ETH**</a>.
+
 ### 🔗 **Smart Contract**
 
 - Deployed on **Base Sepolia** testnet at contract address:  
@@ -39,7 +41,6 @@
 
 ### 💻 **Frontend**
 
-- The frontend is built using **Scaffold-ETH**.
 - Provides end-to-end support for:
   - Viewing traffic violations.
   - Paying fines using:
@@ -112,11 +113,11 @@
 
 ## 🛠️ **Technologies Used**
 
-- **Frontend**: Scaffold-ETH, React.js
+- **Frontend**: Next.js, DaisyUI, TailwindCSS
 - **Backend**: Hardhat (Smart Contract Development)
 - **Blockchain**: Solidity, Base Sepolia Testnet
 - **AI**: Python-based automation with Galadriel AI agent
-- **Wallet Integration**: Coinbase Wallet, UPI-to-crypto payments
+- **Wallet Integration**: Rainbox Kit, Metamask, Coinbase Wallet, Ledger, Brave Wallet
 - **Identity Verification**: Anon Aadhaar
 
 ---
@@ -145,12 +146,12 @@
 2. Install dependencies:
 
    ```bash
-   npm install
+   yarn install
    ```
 
 3. Deploy the contract to **Base Sepolia**:
    ```bash
-   npx hardhat run scripts/deploy.js --network baseSepolia
+   yarn deploy --network baseSepolia
    ```
 
 ### Frontend Setup
@@ -158,7 +159,7 @@
 1. Start the frontend:
 
    ```bash
-   npm start
+   yarn start
    ```
 
 2. Open the app in your browser:
