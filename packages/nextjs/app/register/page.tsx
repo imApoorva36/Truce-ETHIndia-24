@@ -9,6 +9,7 @@ import { useAccount } from "wagmi";
 import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 import { DLModal } from "./component/dl-modal";
 import AadharVerify from "~~/components/AadharVerify"
+import DLVerify from "~~/components/DLVerify"
 
 const OnboardingForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -96,19 +97,7 @@ const OnboardingForm: React.FC = () => {
         <div className="card-body">
           <h2 className="card-title text-center mb-4 text-primary">Vehicle Registration</h2>
           <AadharVerify />
-          <button className="btn btn-secondary mt-4 w-full" onClick={openModal}>
-            Verify with Driving License
-          </button>
-          {showModal && (
-            <dialog className="modal modal-open">
-              <div className="modal-content bg-slate-50 p-2 rounded-lg">
-                <button onClick={closeModal} className="close-button">
-                  &times;
-                </button>
-                <DLModal />
-              </div>
-            </dialog>
-          )}
+          <DLVerify />
           <form onSubmit={handleSubmit}>
             <div className="form-control mb-2">
               <label className="input input-bordered flex items-center gap-2">

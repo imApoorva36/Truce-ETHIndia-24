@@ -5,13 +5,11 @@ import { generateInput } from "../anon-digilocker";
 import revealSelectors from "../reveal-selectors.json";
 import { groth16 } from "snarkjs";
 
-export const DLModal = () => {
+export const DLModal = ({ proof, setProof} : any) => {
   const [xmlContent, setXmlContent] = React.useState("");
   const [status, setStatus] = React.useState("");
-  const [showModal, setShowModal] = React.useState(false);
   const [revealStart, setRevealStart] = React.useState("");
   const [revealEnd, setRevealEnd] = React.useState("");
-  const [proof, setProof] = React.useState<any>();
 
   function handleXMLChange(newXml: any) {
     setXmlContent(newXml);
@@ -191,14 +189,6 @@ export const DLModal = () => {
         </form>
 
         {status.length > 0 && <div className="alert alert-light mt-4">{status}</div>}
-
-        {proof && (
-          <div className="alert alert-light">
-            <code>
-              <pre>{JSON.stringify(proof, null, 2)}</pre>
-            </code>
-          </div>
-        )}
       </div>
     </div>
   );

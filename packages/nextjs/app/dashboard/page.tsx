@@ -20,6 +20,7 @@ export default function HomeDashboard() {
 
   let { data: userData } = useScaffoldReadContract({ contractName: "Backend", functionName: "getUserDetailsByAddress", args: [address] })
   let { data: violations } = useScaffoldReadContract({ contractName: "Backend", functionName: "getUserViolations", args: [address]})
+  let { data: userPoints } = useScaffoldReadContract({ contractName: "Backend", functionName: "getUserPoints", args: [address] })
 
   let rewardBalance = userData ? userData[4] : 0;
 
@@ -52,12 +53,11 @@ export default function HomeDashboard() {
         </div>
         <div className="card bg-secondary text-secondary-content shadow-lg">
           <div className="card-body">
-            <h2 className="card-title">Total Fines Paid</h2>
-            <div className="flex items-center justify-center text-xl">
-              <span>0.001</span>
-              <span className="text-[0.8em] font-bold ml-1">{targetNetwork.nativeCurrency.symbol}</span>
+            <h2 className="card-title">Total Points</h2>
+            <div className="flex flex-col items-center justify-center text-xl">
+              <span>{(userPoints || 0).toString()}</span>
+            Points
             </div>
-            {chain && <span className="text-md text-center">{chain.name}</span>}
           </div>
         </div>
         <div className="card bg-secondary text-accent-content shadow-lg">

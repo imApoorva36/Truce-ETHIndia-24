@@ -65,7 +65,7 @@ contract Backend {
         violationFines["Parking"] = 40;
         violationFines["Red Light"] = 60;
         violationFines["Wrong way"] = 90;
-        totalRewardPool = 1000; // Initialize with 1000
+        totalRewardPool = 0; // Initialize with 1000
         totalpoints = 0;
     }
 

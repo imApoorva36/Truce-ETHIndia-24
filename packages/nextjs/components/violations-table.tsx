@@ -136,7 +136,7 @@ const ViolationsTable: React.FC<{violations: readonly Violation[]}> = ({ violati
                   <td>
                     <div className="flex items-center justify-center gap-2">
                       <Clock className="w-4 h-4 opacity-50" />
-                      {(new Date(parseInt(violation.time.toString()))).toString()}
+                      {(new Date(parseInt(violation.time.toString())*1000)).toString()}
                     </div>
                   </td>
 
