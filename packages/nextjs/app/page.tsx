@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Award, Car, Check, MapPin, Shield, Wallet, Zap } from "lucide-react";
+import { AlertCircle, ArrowLeft, ArrowRight, Award, Car, Shield, Star, Wallet, Zap } from "lucide-react";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import { Address } from "~~/components/scaffold-eth";
@@ -31,13 +31,13 @@ const LandingPage: React.FC = () => {
 
   const testimonials = [
     {
-      name: "Sarah Johnson",
+      name: "J Hariharan",
       role: "Marketing Manager",
       quote: "This app completely transformed how I view my driving habits!",
-      rating: 5,
+      rating: 4,
     },
     {
-      name: "Mike Rodriguez",
+      name: "Shubham Rasal",
       role: "Software Engineer",
       quote: "The rewards program is incredible. I'm actually saving money by driving safely.",
       rating: 5,
@@ -53,7 +53,7 @@ const LandingPage: React.FC = () => {
             <div className="camera"></div>
             <div className="display">
               <div className="artboard artboard-demo laptop-1 bg-base-100">
-                <img src="/mockup.png" alt="App Screenshot" className="object-cover" />
+                <img src="/mockup.png" alt="App Screenshot" className="object-contain" />
               </div>
             </div>
           </div>
@@ -65,21 +65,28 @@ const LandingPage: React.FC = () => {
             </h1>
             <p className="py-6 text-lg">
               Transform your driving experience with our innovative platform that tracks your safety, rewards your good
-              habits, and lets you earn cryptocurrency while on the road.
+              habits, and lets you earn rewards while on the road.
             </p>
             <div className="join w-full">
-              <button
-                className="btn btn-primary join-item"
-                onClick={() => {
-                  /* Add email signup logic */
-                }}
-              >
-                Get Started <ArrowRight className="ml-2" />
-              </button>
-              <div className="flex justify-center items-center space-x-2 flex-col sm:flex-row">
+              <Link href="/register">
+                <button className="btn btn-primary join-item">
+                  Get Started <ArrowRight className="ml-2" />
+                </button>
+              </Link>
+              <Link href="/login">
+                <button
+                  className="btn btn-secondary join-item"
+                  onClick={() => {
+                    /* Add email signup logic */
+                  }}
+                >
+                  <ArrowLeft className="ml-2" /> Login
+                </button>
+              </Link>
+              {/* <div className="flex justify-center items-center space-x-2 flex-col sm:flex-row">
                 <p className="my-2 font-medium">Connected Address:</p>
                 <Address address={connectedAddress} />
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -90,7 +97,7 @@ const LandingPage: React.FC = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4">
-              How <span className="text-primary">SafeDrive</span> Works
+              How <span className="text-primary">Rule Zer0</span> Works
             </h2>
             <p className="text-xl max-w-2xl mx-auto">
               A comprehensive platform that turns safe driving into a rewarding experience.
@@ -116,7 +123,7 @@ const LandingPage: React.FC = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4">
-              Your Journey to <span className="text-primary">Safer Driving</span>
+              Your Journey to Following <span className="text-primary">Rules</span>
             </h2>
           </div>
 
@@ -127,7 +134,7 @@ const LandingPage: React.FC = () => {
               </div>
               <div className="timeline-end timeline-box">
                 <h3 className="font-bold text-xl">Sign Up on our App</h3>
-                <p>Set up your SafeDrive account in minutes.</p>
+                <p>Set up your Rule Zer0 account in minutes.</p>
               </div>
               <hr className="bg-primary" />
             </div>
@@ -151,6 +158,18 @@ const LandingPage: React.FC = () => {
                 <h3 className="font-bold text-xl">Earn Rewards</h3>
                 <p>Convert safe driving into points, discounts, and cryptocurrency.</p>
               </div>
+              <hr className="bg-primary" />
+            </div>
+
+            <div className="timeline-end text-center mb-12">
+              <div className="timeline-middle">
+                <AlertCircle className="w-10 h-10 text-primary" />
+              </div>
+              <div className="timeline-start timeline-box">
+                <h3 className="font-bold text-xl">Pay Fines</h3>
+                <p>Receive information for any traffic violations.</p>
+              </div>
+              <hr className="bg-primary" />
             </div>
           </div>
         </div>
@@ -180,10 +199,10 @@ const LandingPage: React.FC = () => {
                       <p className="text-sm text-gray-500">{testimonial.role}</p>
                     </div>
                   </div>
-                  <p className="italic mb-4">"{testimonial.quote}"</p>
+                  <p className="italic mb-4">&quot;{testimonial.quote}&quot;</p>
                   <div className="rating">
                     {[...Array(testimonial.rating)].map((_, i) => (
-                      <input key={i} type="radio" className="mask mask-star-2 bg-orange-400" checked readOnly />
+                      <Star key={i} className="w-6 h-6 text-orange-400 fill-primary" />
                     ))}
                   </div>
                 </div>
@@ -202,28 +221,23 @@ const LandingPage: React.FC = () => {
               Join thousands of drivers who are earning rewards while staying safe on the road.
             </p>
             <div className="join w-full">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="input input-bordered join-item w-full"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-              />
-              <button
-                className="btn btn-accent join-item"
-                onClick={() => {
-                  /* Add email signup logic */
-                }}
-              >
-                Start Now <ArrowRight className="ml-2" />
-              </button>
+              <Link href="/register">
+                <button className="btn btn-accent join-item">
+                  Get Started <ArrowRight className="ml-2" />
+                </button>
+              </Link>
+              <Link href="/login">
+                <button className="btn btn-accent join-item">
+                  Login <ArrowRight className="ml-2" />
+                </button>
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="footer p-10 bg-base-200 text-base-content">
+      <footer className="footer p-10 bg-primary text-base-content">
         <nav>
           <header className="footer-title">Company</header>
           <a className="link link-hover">About us</a>

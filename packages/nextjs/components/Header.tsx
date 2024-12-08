@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { Bars3Icon, BugAntIcon, GiftIcon } from "@heroicons/react/24/outline";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
-import { LayoutDashboardIcon } from "lucide-react";
+import { LayoutDashboardIcon, Medal } from "lucide-react";
 
 type HeaderMenuLink = {
   label: string;
@@ -38,6 +38,12 @@ export const menuLinks: HeaderMenuLink[] = [
     href: "/rewards",
     icon: <GiftIcon className="h-4 w-4" />,
   },
+
+  {
+    label: "Leaderboard",
+    href: "/leaderboard",
+    icon: <Medal className="h-4 w-4" />,
+  }
 ];
 
 export const HeaderMenuLinks = () => {
