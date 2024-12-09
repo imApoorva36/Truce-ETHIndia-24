@@ -10,6 +10,7 @@ import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 import { DLModal } from "./component/dl-modal";
 import AadharVerify from "~~/components/AadharVerify"
 import DLVerify from "~~/components/DLVerify"
+import Link from "next/link"
 
 const OnboardingForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -98,6 +99,9 @@ const OnboardingForm: React.FC = () => {
           <h2 className="card-title text-center mb-4 text-primary">Vehicle Registration</h2>
           <AadharVerify />
           <DLVerify />
+          <Link href="https://www.basefairy.xyz/" target="_blank">
+            <button className="btn bg-blue-600 hover:bg-blue-700 w-full text-center">Claim Basename</button>
+          </Link>
           <form onSubmit={handleSubmit}>
             <div className="form-control mb-2">
               <label className="input input-bordered flex items-center gap-2">
@@ -105,7 +109,7 @@ const OnboardingForm: React.FC = () => {
                 <input
                   type="text"
                   name="username"
-                  placeholder="Username"
+                  placeholder="Enter Basename (or Username)"
                   className="grow"
                   value={formData.username}
                   onChange={handleInputChange}
